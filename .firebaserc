@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ecommerce-e9585": {
+      "hosting": {
+        "Ecommerce": [
+          "ecommerce-e9585"
+        ]
+      }
+    }
+  }
+}
