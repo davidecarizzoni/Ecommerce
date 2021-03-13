@@ -1,1 +1,16 @@
-<p>userinfo works!</p>
+<div class="container">
+
+  <div class="row justify-content-center">
+      <div class="text-info" *ngIf="getCurrentUser()">
+          <h4 class="alldata"> USER INFO </h4>
+          <h5><b> User ID: </b> {{getCurrentUserID()}}</h5>
+          <h5><b> User email </b> {{getCurrentUserName()}}</h5> <br>
+      </div>
+  </div>
+  <div class="row justify-content-center">
+    <div *ngIf="isLogged()" class="text-info">
+      <button class="btn btn-primary" (click)="signout()"> Logout </button>
+    </div>
+  </div>
+
+</div>
