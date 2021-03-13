@@ -11,19 +11,28 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  errorMessage = '';
-  error: {name: string, message: string} = {name: '', message: ''};
+  errorMessage = "";
+  error: {name: string, message: string} = {name: '', message: ''}; //implementare la traduzione del messaggio in Italiano
+
+  //Implementare messaggio di errore con ToastService o piccola finestrella a scomparsa easy
 
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
-      this.registerForm = this.fb.group({
-        email: ['', Validators.required],
-        password: ['', Validators.required]
-      });
+    this.registerForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {}
 
+
+  clearErrorMessage() {
+    this.errorMessage = "";
+    this.error = {name: '', message: ''};
+  }
+
   register(form:any){
+    this.clearErrorMessage();
     if(this.validateInput(form)){
       this.authService.registerWithEmail(form.email, form.password).then(() => {
         this.router.navigate(['/userinfo'])
@@ -31,7 +40,6 @@ export class RegisterComponent implements OnInit {
           this.error = _error
           this.router.navigate(['/register'])
       })
-
     }
   }
 

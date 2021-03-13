@@ -1,15 +1,17 @@
 <div class="container-sm mt-4">
   <div class="justify-content-center">
+    <p *ngIf="errorMessage.length > 0" class="text-danger"> {{errorMessage}} </p>
+    <p *ngIf="error.message.length > 0" class="text-danger"> {{error.message}} </p>
     <div class="mx-auto" style="width: 500px;">
-      <form (ngSubmit)="login(email.value, password.value)">
+      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
         <h2 >Login page </h2>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp" placeholder="Email" #email>
+          <input type="email" class="form-control" id="exampleInputEmail1"  formControlName="email" aria-describedby="emailHelp" placeholder="Email" >
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" #password>
+          <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password" placeholder="Password" >
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         <div>
