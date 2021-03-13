@@ -9,6 +9,7 @@ import { AngularFireDatabaseModule} from '@angular/fire/database';
 import { environment} from '../environments/environment';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { LoginModule } from './features/login/login.module';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgbModule
 
   ],
   providers: [],
