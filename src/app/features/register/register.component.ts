@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +10,51 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  registerForm: FormGroup;
+  errorMessage = '';
+  error: {name: string, message: string} = {name: '', message: ''};
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
+      this.registerForm = this.fb.group({
+        email: ['', Validators.required],
+        password: ['', Validators.required]
+      });
   }
+
+  ngOnInit(): void {}
+
+  register(form:any){
+    if(this.validateInput(form)){
+      this.authService.registerWithEmail(form.email, form.password).then(() => {
+        this.router.navigate(['/userinfo'])
+      }).catch((_error: any) => {
+          this.error = _error
+          this.router.navigate(['/register'])
+      })
+
+    }
+  }
+
+  validateInput(form:any){
+    if(form.email.length === 0 ){
+      this.errorMessage = "Email non valida. Reinserire";
+      return false;
+    }
+
+    if(form.password.length === 0 ){
+      this.errorMessage = "Password non valida. Reinserire";
+      return false;
+    }
+
+    if(form.password.length < 6) {
+      this.errorMessage = "Passord troppo corta. Lunghezza minima di 6 caratteri";
+      return false;
+    }
+
+    this.errorMessage = "";
+    return true;
+  }
+
+
 
 }

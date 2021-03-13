@@ -6,11 +6,14 @@ import { AppComponent } from './app.component';
 
 import { AngularFireModule} from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
-import { environment} from '../environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
+
+import { environment} from '../environments/environment';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { LoginModule } from './features/login/login.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './core/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -19,15 +22,21 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     CommonModule,
-    // LoginModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFirestoreModule,
-    NgbModule
+    AngularFireAuthModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
 
   ],
-  providers: [],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
