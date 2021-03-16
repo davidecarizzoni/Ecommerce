@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
+
+  authError: any;
   registerForm: FormGroup;
   errorMessage = "";
   error: {name: string, message: string} = {name: '', message: ''}; //implementare la traduzione del messaggio in Italiano
@@ -23,44 +25,14 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-
-  clearErrorMessage() {
-    this.errorMessage = "";
-    this.error = {name: '', message: ''};
+  ngOnInit() {
+    this.authService.eventAuthError$.subscribe( data => {
+      this.authError = data;
+    })
   }
 
-  register(form:any){
-    this.clearErrorMessage();
-    if(this.validateInput(form)){
-      this.authService.registerWithEmail(form.email, form.password).then(() => {
-        this.router.navigate(['/userinfo'])
-      }).catch((_error: any) => {
-          this.error = _error
-          this.router.navigate(['/register'])
-      })
-    }
-  }
-
-  validateInput(form:any){
-    if(form.email.length === 0 ){
-      this.errorMessage = "Email non valida. Reinserire";
-      return false;
-    }
-
-    if(form.password.length === 0 ){
-      this.errorMessage = "Password non valida. Reinserire";
-      return false;
-    }
-
-    if(form.password.length < 6) {
-      this.errorMessage = "Passord troppo corta. Lunghezza minima di 6 caratteri";
-      return false;
-    }
-
-    this.errorMessage = "";
-    return true;
+  createUser(form:any){
+    this.authService.createUser(form.value);
   }
 
 

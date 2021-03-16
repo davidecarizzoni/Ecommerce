@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private eventAuthError = new BehaviorSubject<string>("");
+  eventAuthError$ = this.eventAuthError.asObservable();
   authState: any = null;
+  newUser: any;
 
-  constructor(private angularFireAuth: AngularFireAuth, private router: Router) {
-    this.angularFireAuth.authState.subscribe(( auth => {
+  constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore) {
+    this.afAuth.authState.subscribe(( auth => {
       this.authState = auth;
     }))
   }
@@ -37,7 +42,7 @@ export class AuthService {
   }
 
   registerWithEmail(email: string, password: string){
-    return this.angularFireAuth.createUserWithEmailAndPassword(email, password).then((user) => {
+    return this.afAuth.createUserWithEmailAndPassword(email, password).then((user) => {
       this.authState = user;
     }).catch((error) => {
       console.log(error);
@@ -46,7 +51,7 @@ export class AuthService {
   }
 
   loginWithEmail(email: string, password: string) {
-    return this.angularFireAuth.signInWithEmailAndPassword(email, password).then((user) => {
+    return this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
       this.authState = user;
     }).catch((error) => {
       console.log(error);
@@ -55,9 +60,34 @@ export class AuthService {
   }
 
   signOut(){
-    this.angularFireAuth.signOut();
+    this.afAuth.signOut();
     console.log("Ti sei scollegato! ")
     this.router.navigateByUrl("/login");
+  }
+
+  createUser(user: any){
+    this.afAuth.createUserWithEmailAndPassword(user.email, user.password).then((userCredential) => {
+      this.newUser = user;
+      console.log(userCredential);
+      userCredential.user?.updateProfile({
+        displayName: user.firstName + ' ' + user.lastName
+      });
+
+      this.insertUserData(userCredential).then(()=>{
+        this.router.navigate(['/userinfo'])
+      });
+    }).catch((error) => {
+      this.eventAuthError.next(error);
+    })
+  }
+
+  insertUserData(userCredential: any){
+    return this.db.doc(`Users/${userCredential.user.uid}`).set({
+      email: this.newUser.email,
+      firstname: this.newUser.firstName,
+      lastname: this.newUser.lastName,
+      role: 'network user'
+    })
   }
 
 }
