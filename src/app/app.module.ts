@@ -8,6 +8,9 @@ import { AngularFireModule} from '@angular/fire';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule} from '@angular/fire/firestore';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
 
 import { environment} from '../environments/environment';
 import { CommonModule } from '@angular/common';
@@ -33,6 +36,7 @@ import { AuthService } from './core/auth/auth.service';
 
   ],
   exports: [
+    AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule
   ],

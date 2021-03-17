@@ -3,6 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { auth } from 'firebase/app';
+import * as firebase from 'firebase/app';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,62 +14,38 @@ export class AuthService {
 
   private eventAuthError = new BehaviorSubject<string>("");
   eventAuthError$ = this.eventAuthError.asObservable();
-  authState: any = null;
   newUser: any;
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore) {
-    this.afAuth.authState.subscribe(( auth => {
-      this.authState = auth;
-    }))
+    this.afAuth.auth.languageCode='it';
   }
 
-  get isUserAnonymousLoggedIn(): boolean {
-    return (this.authState !== null) ? this.authState.isAnonymous: false ;
-  }
-
-  get currentUserId(): string {
-    return (this.authState !== null) ? this.authState.uid : "" ;
-  }
-
-  get currentUserName(): string {    //implements displayname?
-    return this.authState["email"];
-  }
-
-  get currentUser(): any {
-    return (this.authState !== null) ? this.authState : false ;
-  }
-
-  get isUserEmailLoggedIn() : boolean {
-    return ((this.authState !== null) && (!this.isUserAnonymousLoggedIn)) ? true : false;
-    //se c'è errore tolgo operatore binario
-  }
-
-  registerWithEmail(email: string, password: string){
-    return this.afAuth.createUserWithEmailAndPassword(email, password).then((user) => {
-      this.authState = user;
-    }).catch((error) => {
-      console.log(error);
-      throw error;
+  async loginWithGoogle(){
+    await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((userCredential)=>{
+      this.router.navigateByUrl("/home");
+    }).catch(error => {
+      this.afAuth.auth.languageCode='it';
+      this.eventAuthError.next(error);
     })
   }
 
-  loginWithEmail(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
-      this.authState = user;
-    }).catch((error) => {
-      console.log(error);
-      throw error;
+  loginWithEmail(email: string, password: string ) {
+    this.afAuth.auth.signInWithEmailAndPassword(email, password).then(()=>{
+      this.router.navigateByUrl("/home");
+    }).catch( error => {
+      this.afAuth.auth.languageCode='it';
+
+      this.eventAuthError.next(error);
     })
   }
 
-  signOut(){
-    this.afAuth.signOut();
-    console.log("Ti sei scollegato! ")
+  logout(){
+    this.afAuth.auth.signOut();
     this.router.navigateByUrl("/login");
   }
 
   createUser(user: any){
-    this.afAuth.createUserWithEmailAndPassword(user.email, user.password).then((userCredential) => {
+    this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then((userCredential) => {
       this.newUser = user;
       console.log(userCredential);
       userCredential.user?.updateProfile({
@@ -76,18 +55,41 @@ export class AuthService {
       this.insertUserData(userCredential).then(()=>{
         this.router.navigate(['/userinfo'])
       });
-    }).catch((error) => {
+    }).catch((error:any) => {
       this.eventAuthError.next(error);
     })
   }
 
-  insertUserData(userCredential: any){
-    return this.db.doc(`Users/${userCredential.user.uid}`).set({
+
+  createUserWithGoogle(){
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((userCredential) => {
+      this.newUser = userCredential.user;
+      console.log(this.newUser);
+      userCredential.user?.updateProfile({
+        displayName: userCredential.user.displayName
+      });
+
+      this.insertUserData(userCredential).then(()=>{
+        this.router.navigate(['/userinfo'])
+      });
+    }).catch((error:any) => {
+      this.eventAuthError.next(error);
+    })
+  }
+
+  async insertUserData(userCredential: any){
+    console.log("INSERT USER DATA" + userCredential)
+    await this.db.doc(`Users/${userCredential.user.uid}`).set({
       email: this.newUser.email,
       firstname: this.newUser.firstName,
       lastname: this.newUser.lastName,
       role: 'network user'
     })
   }
+
+  getUserState() {
+    return this.afAuth.authState;
+  }
+
 
 }

@@ -13,24 +13,26 @@ export class UserinfoComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getCurrentUser(){
-    return this.authService.currentUser;
-  }
+//   getCurrentUser(){
+//     return this.authService.currentUser;
+//   }
 
-  getCurrentUserID(){
-    return this.authService.currentUserId;
-  }
+//   getCurrentUserID(){
+//     return this.authService.currentUserId;
+//   }
 
-  getCurrentUserName(){
-    return this.authService.currentUserName;
-  }
+//   getCurrentUserName(){
+//     return this.authService.currentUserName;
+//   }
 
-  isLogged(): boolean {
-    return this.authService.isUserEmailLoggedIn;
-  }
+//   isLogged(): boolean {
+//     return this.authService.isUserEmailLoggedIn;
+//   }
 
-  signout() {
-    this.authService.signOut();
-    this.router.navigateByUrl("/login");
-  }
+//   logout() {
+//     this.authService.logout();
+//     this.router.navigateByUrl("/login");
+//   }
+// }
+
 }

@@ -1,0 +1,10 @@
+<div class="container">
+  <h4 class="mt-4"> Home page </h4>
+
+  <p *ngIf="user"> Benvenuto {{user.displayName}}</p>
+
+  <button class="btn btn-primary" *ngIf="!user" (click)="register()"> Register </button>
+  <button class="btn btn-primary" *ngIf="user" (click)="logout()"> Logout </button>
+  <button class="btn btn-primary" *ngIf="!user" (click)="login()"> Login </button>
+
+</div>
