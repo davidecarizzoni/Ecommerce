@@ -12,17 +12,13 @@ export class RegisterComponent implements OnInit {
 
 
   authError: any;
-  registerForm: FormGroup;
   errorMessage = "";
   error: {name: string, message: string} = {name: '', message: ''}; //implementare la traduzione del messaggio in Italiano
 
   //Implementare messaggio di errore con ToastService o piccola finestrella a scomparsa easy
 
   constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
-    this.registerForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+
   }
 
   ngOnInit() {
@@ -32,6 +28,8 @@ export class RegisterComponent implements OnInit {
   }
 
   createUser(form:any){
+    console.log("ola");
+    console.log(form);
     this.authService.createUser(form.value);
   }
 

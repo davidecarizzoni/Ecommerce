@@ -53,7 +53,7 @@ export class AuthService {
       });
 
       this.insertUserData(userCredential).then(()=>{
-        this.router.navigate(['/userinfo'])
+        this.router.navigate(['/home'])
       });
     }).catch((error:any) => {
       this.eventAuthError.next(error);
@@ -70,7 +70,7 @@ export class AuthService {
       });
 
       this.insertUserData(userCredential).then(()=>{
-        this.router.navigate(['/userinfo'])
+        this.router.navigate(['/homr'])
       });
     }).catch((error:any) => {
       this.eventAuthError.next(error);
@@ -78,7 +78,6 @@ export class AuthService {
   }
 
   async insertUserData(userCredential: any){
-    console.log("INSERT USER DATA" + userCredential)
     await this.db.doc(`Users/${userCredential.user.uid}`).set({
       email: this.newUser.email,
       firstname: this.newUser.firstName,

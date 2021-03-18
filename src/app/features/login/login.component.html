@@ -1,4 +1,4 @@
-<div class="container ">
+<!-- <div class="container ">
   <h4> LOGIN </h4>
   <div class="row">
     <div class="col-12">
@@ -38,4 +38,33 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<!------------------------------------------------------------------->
+
+<div id="login-box">
+  <div class="left">
+    <h1>Login </h1>
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <span class="loginwith"></span>
+
+      <input ngModel #password="ngModel" type="text" name="email" placeholder="E-mail" />
+      <input ngModel #email="ngModel"type="password" name="password" placeholder="Password" />
+
+
+      <button class="login" type="submit" name="signup_submit"> Login</button>
+    </form>
+  </div>
+
+  <div class="right">
+    <span class="loginwith">Sign in with<br />social network</span>
+
+    <button class="social-signin facebook">Log in with facebook</button>
+    <button class="social-signin twitter">Log in with Twitter</button>
+    <button class="social-signin google" (click)="loginWithGoogle()">Log in with Google+</button>
+  </div>
+
+
+  <div class="or">OR</div>
+  <div class="register">Non hai ancora un account? <a routerLink="/register"> Registrati!</a> </div>
 </div>
