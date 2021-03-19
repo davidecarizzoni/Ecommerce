@@ -15,13 +15,24 @@ body {
 
 #login-box {
   position: relative;
-  margin: 20% auto;
+  margin: 10% auto;
   width: 600px;
-  height: 400px;
+  height: 440px;
   background: #FFF;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
+
+.authMessage {
+  position: absolute;
+  color: rgb(158, 16, 16);
+  top: 380px;
+  height: 40px;
+  margin-left: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+
 
 .left {
   position: absolute;
