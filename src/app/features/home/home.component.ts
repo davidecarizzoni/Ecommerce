@@ -11,26 +11,16 @@ export class HomeComponent implements OnInit {
 
   public user:any;
 
-  constructor( private authService: AuthService, private router:Router){
-
-  }
+  constructor( private authService: AuthService, private router:Router){}
 
   ngOnInit() {
-    this.authService.getUserState().subscribe(user => {
+    this.authService.getUserState().subscribe((user:any) => {
       this.user = user;
     })
   }
 
-  login(){
-    this.router.navigateByUrl('login')
-  }
-
   logout(){
     this.authService.logout();
-  }
-
-  register(){
-    this.router.navigateByUrl('register')
   }
 
 }

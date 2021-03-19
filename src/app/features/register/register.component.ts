@@ -10,10 +10,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-
   authError: any;
-  errorMessage = "";
-  error: {name: string, message: string} = {name: '', message: ''}; //implementare la traduzione del messaggio in Italiano
 
   //Implementare messaggio di errore con ToastService o piccola finestrella a scomparsa easy
 
@@ -28,11 +25,15 @@ export class RegisterComponent implements OnInit {
   }
 
   createUser(form:any){
-    console.log("ola");
-    console.log(form);
     this.authService.createUser(form.value);
   }
 
+  async googleAuth(){
+    await this.authService.googleAuth();
+  }
 
+  async facebooAuth(){
+    await this.authService.facebookAuth();
+  }
 
 }

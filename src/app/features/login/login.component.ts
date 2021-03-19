@@ -22,7 +22,12 @@ export class LoginComponent implements OnInit {
     this.authService.loginWithEmail(form.value.email, form.value.password);
   }
 
-  loginWithGoogle(){
-    this.authService.loginWithGoogle();
+  async googleAuth(){
+    await this.authService.googleAuth();
   }
+
+  async facebookAuth(){
+    await this.authService.facebookAuth();
+  }
+
 }

@@ -13,7 +13,7 @@ import 'firebase/auth';
 
 
 import { environment} from '../environments/environment';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './core/auth/auth.service';
@@ -40,7 +40,7 @@ import { AuthService } from './core/auth/auth.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

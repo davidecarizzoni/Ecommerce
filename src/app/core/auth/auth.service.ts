@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { auth } from 'firebase/app';
 import * as firebase from 'firebase/app';
+import { DatePipe } from '@angular/common'
+
 
 
 @Injectable({
@@ -16,15 +18,22 @@ export class AuthService {
   eventAuthError$ = this.eventAuthError.asObservable();
   newUser: any;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore) {
-    this.afAuth.auth.languageCode='it';
+  constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore, public datepipe: DatePipe) {}
+
+  async googleAuth(){
+    await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(async ()=>{
+      this.router.navigate(['/home'])
+    }).catch(error => {
+      console.log(error);
+      this.eventAuthError.next(error);
+    })
   }
 
-  async loginWithGoogle(){
-    await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((userCredential)=>{
-      this.router.navigateByUrl("/home");
+  async facebookAuth() {
+    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(async ()=>{
+      await this.router.navigate(['/home'])
     }).catch(error => {
-      this.afAuth.auth.languageCode='it';
+      console.log(error);
       this.eventAuthError.next(error);
     })
   }
@@ -33,8 +42,6 @@ export class AuthService {
     this.afAuth.auth.signInWithEmailAndPassword(email, password).then(()=>{
       this.router.navigateByUrl("/home");
     }).catch( error => {
-      this.afAuth.auth.languageCode='it';
-
       this.eventAuthError.next(error);
     })
   }
@@ -61,8 +68,8 @@ export class AuthService {
   }
 
 
-  createUserWithGoogle(){
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((userCredential) => {
+  async createUserWithGoogle(){
+   await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((userCredential) => {
       this.newUser = userCredential.user;
       console.log(this.newUser);
       userCredential.user?.updateProfile({
@@ -78,10 +85,12 @@ export class AuthService {
   }
 
   async insertUserData(userCredential: any){
+
     await this.db.doc(`Users/${userCredential.user.uid}`).set({
       email: this.newUser.email,
       firstname: this.newUser.firstName,
       lastname: this.newUser.lastName,
+      creationTime: this.datepipe.transform(new Date(), 'yyyy-MM-dd H:mm'),
       role: 'network user'
     })
   }

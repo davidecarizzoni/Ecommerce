@@ -3,9 +3,11 @@
 
   <p *ngIf="user"> Benvenuto {{user.displayName}}</p>
 
-  <button class="btn btn-primary" *ngIf="!user" (click)="register()"> Register </button>
-  <button class="btn btn-primary" *ngIf="user" (click)="logout()"> Logout </button>
-  <button class="btn btn-primary" *ngIf="!user" (click)="login()"> Login </button>
+  <ng-container *ngIf="user">
+    <button class="btn btn-primary" (click)="logout()"> Logout </button>
+  </ng-container>
+
+
 
 </div>
 
