@@ -54,7 +54,7 @@
 </div> -->
 
 
-<div id="login-box">
+<!-- <div id="login-box">
   <div class="left">
     <h1> Registrazione </h1>
     <form #userRegForm="ngForm" (ngSubmit)="createUser(userRegForm)">
@@ -64,7 +64,6 @@
       <input ngModel #password="ngModel" type="password" name="password" placeholder="Password" />
 
       <button class="signup" type="submit"> Sign up </button>
-      <!-- <button class="login" name="signup_submit" routerLink="/login"> Go to login </button> -->
     </form>
   </div>
 
@@ -77,4 +76,49 @@
   </div>
   <div class="or">OR</div>
   <div *ngIf="authError" class="authMessage"> {{ authError?.message }} </div>
-</div>
+</div> -->
+
+
+<!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center font-weight-bold">Registrati</h5>
+            <div class *ngIf="authError">
+              <div class="alert alert-warning">{{ authError?.message }}</div>
+            </div>
+            <form #userRegForm="ngForm" (ngSubmit)="createUser(userRegForm)" class="form-signin">
+              <div class="form-group">
+                <input ngModel #firstname="ngModel" type="text" name="firstName" class="form-control" placeholder="Firstname" required autofocus>
+              </div>
+
+              <div class="form-group">
+                <input ngModel #lastname="ngModel" type="text" name="lastName" class="form-control" placeholder="Lastname" required>
+              </div>
+
+              <div class="form-group">
+                <input ngModel #email="ngModel" type="email" name="email" class="form-control" placeholder="Email" required>
+              </div>
+
+              <div class="form-group">
+                <input ngModel #password="ngModel" type="password" name="password" class="form-control" placeholder="Password" required>
+              </div>
+
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+              <a class="d-block text-center mt-2" routerLink="/login">Login</a>
+              <hr class="my-4">
+            </form>
+            <button class="btn btn-lg btn-google btn-block text-uppercase"(click)="googleAuth()" ><i class="fab fa-google mr-2"></i> Sign in with Google</button>
+            <button class="btn btn-lg btn-facebook btn-block text-uppercase" (click)="facebookAuth()"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

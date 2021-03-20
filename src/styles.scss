@@ -3,6 +3,7 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
-body{
-  background-color: lightgray;
+body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
 }

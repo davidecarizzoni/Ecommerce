@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     await this.authService.googleAuth();
   }
 
-  async facebooAuth(){
+  async facebookAuth(){
     await this.authService.facebookAuth();
   }
 

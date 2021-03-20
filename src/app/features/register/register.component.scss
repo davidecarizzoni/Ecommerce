@@ -1,206 +1,275 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
-*:focus {
-  outline: none;
+// @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+// *:focus {
+//   outline: none;
+// }
+
+// body {
+//   margin: 0;
+//   padding: 0;
+//   background: black;
+//   font-size: 16px;
+//   color: #222;
+//   font-family: 'Roboto', sans-serif;
+//   font-weight: 300;
+// }
+
+// #login-box {
+//   position: relative;
+//   margin: 10% auto;
+//   width: 600px;
+//   height: 440px;
+//   background: #FFF;
+//   border-radius: 2px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+// }
+
+// .authMessage {
+//   position: absolute;
+//   color: rgb(158, 16, 16);
+//   top: 380px;
+//   height: 40px;
+//   margin-left: 40px;
+//   line-height: 40px;
+//   text-align: center;
+// }
+
+
+// .left {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   box-sizing: border-box;
+//   padding: 40px;
+//   width: 310px;
+//   height: 400px;
+// }
+
+// h1 {
+//   margin: 0 0 20px 0;
+//   font-weight: 300;
+//   font-size: 28px;
+// }
+
+// input[type="text"],
+// input[type="email"],
+// input[type="password"] {
+//   display: block;
+//   box-sizing: border-box;
+//   margin-bottom: 20px;
+//   padding: 4px;
+//   width: 220px;
+//   height: 32px;
+//   border: none;
+//   border-bottom: 1px solid #AAA;
+//   font-family: 'Roboto', sans-serif;
+//   font-weight: 400;
+//   font-size: 15px;
+//   transition: 0.2s ease;
+// }
+
+// input[type="text"]:focus,
+// input[type="email"]:focus,
+// input[type="password"]:focus {
+//   border-bottom: 2px solid #16a085;
+//   color: #16a085;
+//   transition: 0.2s ease;
+// }
+
+// input[type="submit"] {
+//   margin-top: 28px;
+//   width: 110px;
+//   height: 32px;
+//   background: #32508E;
+//   border: none;
+//   border-radius: 2px;
+//   color: #FFF;
+//   font-family: 'Roboto', sans-serif;
+//   font-weight: 500;
+//   text-transform: uppercase;
+//   transition: 0.1s ease;
+//   cursor: pointer;
+// }
+
+// input[type="submit"]:hover,
+// input[type="submit"]:focus {
+//   opacity: 0.8;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+//   transition: 0.1s ease;
+// }
+
+// input[type="submit"]:active {
+//   opacity: 1;
+//   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+//   transition: 0.1s ease;
+// }
+
+// .or {
+//   position: absolute;
+//   top: 180px;
+//   left: 280px;
+//   width: 40px;
+//   height: 40px;
+//   background: #DDD;
+//   border-radius: 50%;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+//   line-height: 40px;
+//   text-align: center;
+// }
+
+// .right {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   box-sizing: border-box;
+//   padding: 40px;
+//   width: 300px;
+//   height: 400px;
+//   background: url('https://goo.gl/YbktSj');
+//   background-size: cover;
+//   background-position: center;
+//   border-radius: 0 2px 2px 0;
+// }
+
+// .right .loginwith {
+//   display: block;
+//   // margin-bottom: 40px;
+//   font-size: 28px;
+//   color: #FFF;
+//   text-align: center;
+// }
+
+// button.social-signin {
+//   margin-bottom: 20px;
+//   width: 220px;
+//   height: 36px;
+//   border: none;
+//   border-radius: 2px;
+//   color: #FFF;
+//   font-family: 'Roboto', sans-serif;
+//   font-weight: 500;
+//   transition: 0.2s ease;
+//   cursor: pointer;
+// }
+
+// button.login{
+//   margin-top: 28px;
+//   margin-left: 10px;
+//   position: relative;
+//   width: 110px;
+//   height: 32px;
+//   background: #32508E;
+//   border: none;
+//   border-radius: 2px;
+//   color: #FFF;
+//   font-family: 'Roboto', sans-serif;
+//   font-weight: 500;
+//   text-transform: uppercase;
+//   transition: 0.1s ease;
+//   cursor: pointer;
+// }
+
+// button.signup{
+//   margin-top: 28px;
+//   width: 110px;
+//   height: 32px;
+//   background: #32508E;
+//   border: none;
+//   border-radius: 2px;
+//   color: #FFF;
+//   font-family: 'Roboto', sans-serif;
+//   font-weight: 500;
+//   text-transform: uppercase;
+//   transition: 0.1s ease;
+//   cursor: pointer;
+// }
+// button.social-signin:hover,
+// button.social-signin:focus {
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+//   transition: 0.2s ease;
+// }
+
+// button.social-signin:active {
+//   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+//   transition: 0.2s ease;
+// }
+
+// button.social-signin.facebook {
+//   background: #32508E;
+// }
+
+// button.social-signin.twitter {
+//   background: #55ACEE;
+// }
+
+// button.social-signin.google {
+//   background: #DD4B39;
+// }
+
+
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background: black;
-  font-size: 16px;
-  color: #222;
-  font-family: 'Roboto', sans-serif;
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
   font-weight: 300;
+  font-size: 1.5rem;
 }
 
-#login-box {
-  position: relative;
-  margin: 10% auto;
-  width: 600px;
-  height: 440px;
-  background: #FFF;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-.authMessage {
-  position: absolute;
-  color: rgb(158, 16, 16);
-  top: 380px;
-  height: 40px;
-  margin-left: 40px;
-  line-height: 40px;
-  text-align: center;
-}
-
-
-.left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  padding: 40px;
-  width: 310px;
-  height: 400px;
-}
-
-h1 {
-  margin: 0 0 20px 0;
-  font-weight: 300;
-  font-size: 28px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  display: block;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  padding: 4px;
-  width: 220px;
-  height: 32px;
-  border: none;
-  border-bottom: 1px solid #AAA;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  transition: 0.2s ease;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
-  border-bottom: 2px solid #16a085;
-  color: #16a085;
-  transition: 0.2s ease;
-}
-
-input[type="submit"] {
-  margin-top: 28px;
-  width: 110px;
-  height: 32px;
-  background: #32508E;
-  border: none;
-  border-radius: 2px;
-  color: #FFF;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: 0.1s ease;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover,
-input[type="submit"]:focus {
-  opacity: 0.8;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  transition: 0.1s ease;
-}
-
-input[type="submit"]:active {
-  opacity: 1;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  transition: 0.1s ease;
-}
-
-.or {
-  position: absolute;
-  top: 180px;
-  left: 280px;
-  width: 40px;
-  height: 40px;
-  background: #DDD;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  line-height: 40px;
-  text-align: center;
-}
-
-.right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  box-sizing: border-box;
-  padding: 40px;
-  width: 300px;
-  height: 400px;
-  background: url('https://goo.gl/YbktSj');
+.card-signin .card-img-left {
+  width: 45%;
+  /* Link to your background image using in the property below! */
+  background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
   background-size: cover;
-  background-position: center;
-  border-radius: 0 2px 2px 0;
 }
 
-.right .loginwith {
-  display: block;
-  // margin-bottom: 40px;
-  font-size: 28px;
-  color: #FFF;
-  text-align: center;
+.card-signin .card-body {
+  padding: 2rem;
 }
 
-button.social-signin {
-  margin-bottom: 20px;
-  width: 220px;
-  height: 36px;
-  border: none;
-  border-radius: 2px;
-  color: #FFF;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  transition: 0.2s ease;
-  cursor: pointer;
+.form-signin {
+  width: 100%;
 }
 
-button.login{
-  margin-top: 28px;
-  margin-left: 10px;
+.btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.alert .alert-warning{
+  border-radius: 5rem;
+  font-size: small;
+}
+
+.form-group {
   position: relative;
-  width: 110px;
-  height: 32px;
-  background: #32508E;
-  border: none;
-  border-radius: 2px;
-  color: #FFF;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: 0.1s ease;
-  cursor: pointer;
+  margin-bottom: 1rem;
 }
 
-button.signup{
-  margin-top: 28px;
-  width: 110px;
-  height: 32px;
-  background: #32508E;
-  border: none;
-  border-radius: 2px;
-  color: #FFF;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: 0.1s ease;
-  cursor: pointer;
-}
-button.social-signin:hover,
-button.social-signin:focus {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  transition: 0.2s ease;
+.form-group input {
+  font-size: 1.2rem;
+  border-radius: 2rem;
 }
 
-button.social-signin:active {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  transition: 0.2s ease;
+
+.btn-google {
+  color: white;
+  background-color: #ea4335;
 }
 
-button.social-signin.facebook {
-  background: #32508E;
-}
-
-button.social-signin.twitter {
-  background: #55ACEE;
-}
-
-button.social-signin.google {
-  background: #DD4B39;
+.btn-facebook {
+  color: white;
+  background-color: #3b5998;
 }
