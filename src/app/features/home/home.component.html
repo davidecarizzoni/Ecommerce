@@ -1,8 +1,8 @@
 
 <!-- MENU -->
-<ng-container *ngIf="user">
   <app-menu [version]=2></app-menu>
-</ng-container>
 
 <!-- PAGE -->
 <p *ngIf="user"> Benvenuto {{user.displayName}}</p>
+<p *ngIf="!user"> Non sei loggato</p>
+

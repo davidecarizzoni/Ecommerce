@@ -20,6 +20,7 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore, public datepipe: DatePipe) {}
 
+  //scrivo in session così non ho problemi di sincronicità una volta loggato
   googleAuth(){
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(()=>{
       this.router.navigateByUrl("/home");

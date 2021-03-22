@@ -29,10 +29,9 @@
       </a>
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-            <li *ngIf="isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/login" class="nav-link text-light font-weight-bold" (click)="logout()">Logout</a></li>
-
-          <li *ngIf="!isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/login" class="nav-link text-light font-weight-bold" (click)="store()">Login</a></li>
-
+          <li *ngIf="isLogged()" class="nav-item active ml-2"> <a class="nav-link text-light font-weight-bold" (click)="logout()">Logout</a></li>
+          <li *ngIf="!isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/login" class="nav-link text-light font-weight-bold">Login</a></li>
+          <li *ngIf="!isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/register" class="nav-link text-light font-weight-bold">Register</a></li>
           <li class="nav-item active ml-2"><a class="nav-link text-light font-weight-bold" routerLink="contatti"> Contatti </a></li>
         </ul>
       </div>
