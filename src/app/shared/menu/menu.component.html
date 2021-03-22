@@ -1,0 +1,44 @@
+
+<!-- VERSIONE 1: Login e Register  -->
+<ng-container *ngIf="version==1">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+    <div class="container">
+      <a class="navbar-brand">
+        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2">
+        <span class="text-uppercase font-weight-bold text-light">Ecommerce</span>
+      </a>
+      <div id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active ml-2"><a class="nav-link text-light font-weight-bold" (click)="store()"> Store </a></li>
+          <li class="nav-item active ml-2"><a class="nav-link text-light font-weight-bold" routerLink="contatti"> Contatti </a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</ng-container>
+
+
+
+<!-- VERSIONE 2: Home/Products sia nel caso che tu sia loggato o meno  -->
+<ng-container *ngIf="version==2">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+    <div class="container">
+      <a class="navbar-brand">
+        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2">
+        <span class="text-uppercase font-weight-bold text-light">Ecommerce</span>
+      </a>
+      <div id="navbarSupportedContent" class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li *ngIf="isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/login" class="nav-link text-light font-weight-bold" (click)="logout()">Logout</a></li>
+
+          <li *ngIf="!isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/login" class="nav-link text-light font-weight-bold" (click)="store()">Login</a></li>
+
+          <li class="nav-item active ml-2"><a class="nav-link text-light font-weight-bold" routerLink="contatti"> Contatti </a></li>
+        </ul>
+      </div>
+      <form class="form-inline mr-auto ml-4" target="_self">
+        <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" name="search" id="search-field" placeholder="search"></div>
+      </form>
+    </div>
+  </nav>
+</ng-container>

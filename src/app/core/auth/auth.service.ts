@@ -20,26 +20,24 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore, public datepipe: DatePipe) {}
 
-  async googleAuth(){
-    await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(async ()=>{
-      this.router.navigate(['/home'])
+  googleAuth(){
+    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(()=>{
+      this.router.navigateByUrl("/home");
     }).catch(error => {
-      console.log(error);
       this.eventAuthError.next(error);
     })
   }
 
   async facebookAuth() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(async ()=>{
-      await this.router.navigate(['/home'])
+    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(()=>{
+      this.router.navigateByUrl("/home");
     }).catch(error => {
-      console.log(error);
       this.eventAuthError.next(error);
     })
   }
 
-  loginWithEmail(email: string, password: string ) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password).then(()=>{
+  async loginWithEmail(email: string, password: string ) {
+    await this.afAuth.auth.signInWithEmailAndPassword(email, password).then(()=>{
       this.router.navigateByUrl("/home");
     }).catch( error => {
       this.eventAuthError.next(error);
@@ -85,7 +83,6 @@ export class AuthService {
   }
 
   async insertUserData(userCredential: any){
-
     await this.db.doc(`Users/${userCredential.user.uid}`).set({
       email: this.newUser.email,
       firstname: this.newUser.firstName,
@@ -97,6 +94,11 @@ export class AuthService {
 
   getUserState() {
     return this.afAuth.authState;
+  }
+
+  async getUid() {
+     let uid =  this.afAuth.auth.currentUser;
+    return uid;
   }
 
 

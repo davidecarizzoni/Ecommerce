@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
     this.authService.loginWithEmail(form.value.email, form.value.password);
   }
 
-  async googleAuth(){
-    await this.authService.googleAuth();
+  googleAuth(){
+    this.authService.googleAuth();
   }
 
   async facebookAuth(){
