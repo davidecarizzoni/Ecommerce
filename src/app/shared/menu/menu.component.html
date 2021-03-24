@@ -1,43 +1,96 @@
 
 <!-- VERSIONE 1: Login e Register  -->
 <ng-container *ngIf="version==1">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
-    <div class="container">
-      <a class="navbar-brand">
-        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2">
-        <span class="text-uppercase font-weight-bold text-light">Ecommerce</span>
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark black lighten-1" [containerInside]="false">
+    <mdb-navbar-brand>
+      <a class="navbar-brand" href="#">
+        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2"> Epay
       </a>
-      <div id="navbarSupportedContent" class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active ml-2"><a class="nav-link text-light font-weight-bold" (click)="store()"> Store </a></li>
-          <li class="nav-item active ml-2"><a class="nav-link text-light font-weight-bold" routerLink="contatti"> Contatti </a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    </mdb-navbar-brand>
+
+    <links>
+      <ul class="navbar-nav mr-auto ml-5">
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect> Login </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect> Store </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect> Contatti </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto nav-flex-icons mr-2">
+        <li class="nav-item">
+          <a *ngIf="user" class="nav-link"> <i class="fas fa-shopping-cart"></i></a>
+        </li>
+        <li class="nav-item avatar dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <i class="fas fa-user"></i>
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect> {{user.displayName}}</a>
+            <a *ngIf="!user" class="dropdown-item waves-light" mdbWavesEffect> Non sei loggato </a>
+            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
+          </div>
+        </li>
+      </ul>
+
+    </links>
+
+  </mdb-navbar>
 </ng-container>
 
 
 
 <!-- VERSIONE 2: Home/Products sia nel caso che tu sia loggato o meno  -->
 <ng-container *ngIf="version==2">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
-    <div class="container">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark black lighten-1" [containerInside]="false">
+    <mdb-navbar-brand>
       <a class="navbar-brand">
-        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2">
-        <span class="text-uppercase font-weight-bold text-light">Ecommerce</span>
+        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2"> Epay
       </a>
-      <div id="navbarSupportedContent" class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li *ngIf="isLogged()" class="nav-item active ml-2"> <a class="nav-link text-light font-weight-bold" (click)="logout()">Logout</a></li>
-          <li *ngIf="!isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/login" class="nav-link text-light font-weight-bold">Login</a></li>
-          <li *ngIf="!isLogged()" class="nav-item active ml-2"><a href="http://localhost:4200/register" class="nav-link text-light font-weight-bold">Register</a></li>
-          <li class="nav-item active ml-2"><a class="nav-link text-light font-weight-bold" routerLink="contatti"> Contatti </a></li>
-        </ul>
-      </div>
-      <form class="form-inline mr-auto ml-4" target="_self">
-        <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" name="search" id="search-field" placeholder="search"></div>
-      </form>
-    </div>
-  </nav>
+    </mdb-navbar-brand>
+
+    <links>
+      <ul class="navbar-nav mr-auto ml-5">
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect> Login </a>
+        </li>
+        <li class="nav-item" routerLink="store">
+          <a class="nav-link waves-light" mdbWavesEffect > Store </a>
+        </li>
+        <li class="nav-item mr-5">
+          <a class="nav-link waves-light" mdbWavesEffect> Contatti </a>
+        </li>
+        <li>
+          <form class="form-inline waves-light ml-5" mdbWavesEffect>
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            </div>
+          </form>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto nav-flex-icons mr-2">
+        <li class="nav-item">
+          <a *ngIf="user" class="nav-link"><i class="fas fa-shopping-cart"></i></a>
+        </li>
+        <li class="nav-item avatar dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <i class="fas fa-user"></i>
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect> {{user.displayName}}</a>
+            <a *ngIf="!user" class="dropdown-item waves-light" mdbWavesEffect> Non sei loggato </a>
+            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
+          </div>
+        </li>
+      </ul>
+
+    </links>
+
+
+  </mdb-navbar>
 </ng-container>

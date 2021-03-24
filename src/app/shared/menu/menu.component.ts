@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
   @Input()
   version:any;
 
-  public user:any;
+  user:any;
 
   constructor( private authService: AuthService, private router:Router){}
 
