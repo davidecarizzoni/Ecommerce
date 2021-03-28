@@ -1,96 +1,94 @@
+<!-- TOLGO LA BARRA DI RICERCA? C'è GIA NELLO STORE A SINISTRA -->
+
 
 <!-- VERSIONE 1: Login e Register  -->
 <ng-container *ngIf="version==1">
-  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark black lighten-1" [containerInside]="false">
-    <mdb-navbar-brand>
-      <a class="navbar-brand" href="#">
-        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2"> Epay
-      </a>
-    </mdb-navbar-brand>
+  <header class="section-header">
+    <section class="header-main border-bottom">
+        <div class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-2 col-4">
+            <a class="brand-wrap text-light">
+              <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2"> Epay
+            </a>
+        </div>
+        <div class="col-lg-6 col-sm-12"></div> <!-- col.// -->
+        <div class="col-lg-4 col-sm-6 col-12">
+            <div class="widgets-wrap float-md-right">
+                <div class="widget-header  mr-3">
+                    <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+                    <span class="badge badge-pill badge-danger notify">0</span> <!--contare il numero di prodotti del carrello-->
+                </div>
+                <div class="widget-header icontext">
+                    <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
+                    <div class="text">
+                        <span class="text-muted text-white">Welcome! {{user?.displayName}}</span>
+                        <div *ngIf="!user">
+                            <a class="text-light" (click)="goToLogin()"> Login</a> |
+                            <a class="text-light" (click)="goToRegister()"> Register</a>
+                        </div>
+                        <div *ngIf="user">
+                          <a class="text-light" (click)="logout()"> Logout </a>
+                      </div>
+                    </div>
+                </div>
 
-    <links>
-      <ul class="navbar-nav mr-auto ml-5">
-        <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect> Login </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect> Store </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect> Contatti </a>
-        </li>
-      </ul>
-
-      <ul class="navbar-nav ml-auto nav-flex-icons mr-2">
-        <li class="nav-item">
-          <a *ngIf="user" class="nav-link"> <i class="fas fa-shopping-cart"></i></a>
-        </li>
-        <li class="nav-item avatar dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-            <i class="fas fa-user"></i>
-          </a>
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect> {{user.displayName}}</a>
-            <a *ngIf="!user" class="dropdown-item waves-light" mdbWavesEffect> Non sei loggato </a>
-            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
-          </div>
-        </li>
-      </ul>
-
-    </links>
-
-  </mdb-navbar>
+            </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
+    </div> <!-- row.// -->
+        </div> <!-- container.// -->
+    </section> <!-- header-main .// -->
+    </header> <!-- section-header.// -->
 </ng-container>
-
 
 
 <!-- VERSIONE 2: Home/Products sia nel caso che tu sia loggato o meno  -->
 <ng-container *ngIf="version==2">
-  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark black lighten-1" [containerInside]="false">
-    <mdb-navbar-brand>
-      <a class="navbar-brand">
-        <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2"> Epay
-      </a>
-    </mdb-navbar-brand>
+  <header class="section-header">
+    <section class="header-main border-bottom">
+        <div class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-2 col-4">
+            <a class="brand-wrap text-light">
+              <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2"> Epay
+            </a>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <form action="#" class="search">
+                <div class="input-group w-100">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i>
+                      </button>
+                    </div>
+                </div>
+            </form> <!-- search-wrap .end// -->
+        </div> <!-- col.// -->
+        <div class="col-lg-4 col-sm-6 col-12">
+            <div class="widgets-wrap float-md-right">
+                <div class="widget-header  mr-3">
+                    <a href="#" class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></a>
+                    <span class="badge badge-pill badge-danger notify">0</span>
+                </div>
+                <div class="widget-header icontext">
+                    <a class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a> <!--Posso portare a pagina di dettagli utenti, da fare eventualmente alla fine-->
+                    <div class="text">
+                      <span class="text-muted text-white">Welcome! {{user?.displayName}}</span>
+                      <div *ngIf="!user">
+                          <a class="text-light" (click)="goToLogin()"> Login</a> |
+                          <a class="text-light" (click)="goToRegister()"> Register</a>
+                      </div>
+                      <div *ngIf="user">
+                        <a class="text-light" (click)="logout()"> Logout </a>
+                    </div>
+                  </div>
+                </div>
 
-    <links>
-      <ul class="navbar-nav mr-auto ml-5">
-        <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect> Login </a>
-        </li>
-        <li class="nav-item" routerLink="store">
-          <a class="nav-link waves-light" mdbWavesEffect > Store </a>
-        </li>
-        <li class="nav-item mr-5">
-          <a class="nav-link waves-light" mdbWavesEffect> Contatti </a>
-        </li>
-        <li>
-          <form class="form-inline waves-light ml-5" mdbWavesEffect>
-            <div class="md-form my-0">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            </div>
-          </form>
-        </li>
-      </ul>
-
-      <ul class="navbar-nav ml-auto nav-flex-icons mr-2">
-        <li class="nav-item">
-          <a *ngIf="user" class="nav-link"><i class="fas fa-shopping-cart"></i></a>
-        </li>
-        <li class="nav-item avatar dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-            <i class="fas fa-user"></i>
-          </a>
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect> {{user.displayName}}</a>
-            <a *ngIf="!user" class="dropdown-item waves-light" mdbWavesEffect> Non sei loggato </a>
-            <a *ngIf="user" class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
-          </div>
-        </li>
-      </ul>
-
-    </links>
-
-
-  </mdb-navbar>
+            </div> <!-- widgets-wrap.// -->
+        </div> <!-- col.// -->
+    </div> <!-- row.// -->
+        </div> <!-- container.// -->
+    </section> <!-- header-main .// -->
+    </header> <!-- section-header.// -->
 </ng-container>

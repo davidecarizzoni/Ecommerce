@@ -11,9 +11,9 @@
           </div>
           <div class="card-body">
             <h5 class="card-title text-center font-weight-bold">Registrati</h5>
-            <div class *ngIf="authError">
+            <ng-container *ngIf="authError">
               <div class="alert alert-warning">{{ authError?.message }}</div>
-            </div>
+            </ng-container>
             <form #userRegForm="ngForm" (ngSubmit)="createUser(userRegForm)" class="form-signin">
               <div class="form-group">
                 <input ngModel #firstname="ngModel" type="text" name="firstName" class="form-control" placeholder="Firstname" required autofocus>

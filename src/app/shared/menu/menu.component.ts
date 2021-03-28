@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit {
   version:any;
 
   user:any;
+  isLog:boolean = false;
 
   constructor( private authService: AuthService, private router:Router){}
 
@@ -22,24 +23,24 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  isLogged(){
-    return this.user ? true: false;
+  async isLogged(){
+    await this.user ? this.isLog = true: this.isLog = false;
   }
 
   logout(){
     this.authService.logout();
   }
 
-  login(){
+  goToLogin(){
     this.router.navigateByUrl('/login');
   }
 
-  register(){
+  goToRegister(){
     this.router.navigateByUrl('/register');
   }
 
   store(){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/store');
   }
 
 }

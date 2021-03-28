@@ -10,13 +10,11 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  authError: any;
+  authError: any = null;
 
   //Implementare messaggio di errore con ToastService o piccola finestrella a scomparsa easy
 
-  constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
-
-  }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.authService.eventAuthError$.subscribe( data => {

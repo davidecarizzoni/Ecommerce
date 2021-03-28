@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { auth } from 'firebase/app';
 import * as firebase from 'firebase/app';
 import { DatePipe } from '@angular/common'
 
@@ -20,18 +19,18 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore, public datepipe: DatePipe) {}
 
-  //scrivo in session così non ho problemi di sincronicità una volta loggato
+  //scrivo in session così non ho problemi di sincronicità una volta loggato (Anche per legegre il nome nella barra di benvenuto)
   googleAuth(){
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(()=>{
-      this.router.navigateByUrl("/home");
+      this.router.navigateByUrl("/store");
     }).catch(error => {
       this.eventAuthError.next(error);
     })
   }
 
   async facebookAuth() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(()=>{
-      this.router.navigateByUrl("/home");
+    await this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(()=>{
+      this.router.navigateByUrl("/store");
     }).catch(error => {
       this.eventAuthError.next(error);
     })
@@ -53,15 +52,14 @@ export class AuthService {
   createUser(user: any){
     this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then((userCredential) => {
       this.newUser = user;
-      console.log(userCredential);
       userCredential.user?.updateProfile({
         displayName: user.firstName + ' ' + user.lastName
       });
 
       this.insertUserData(userCredential).then(()=>{
-        this.router.navigate(['/home'])
+        this.router.navigateByUrl('/store')
       });
-    }).catch((error:any) => {
+    }).catch((error) => {
       this.eventAuthError.next(error);
     })
   }
@@ -100,6 +98,15 @@ export class AuthService {
   async getUid() {
      let uid =  this.afAuth.auth.currentUser;
     return uid;
+  }
+
+  // Auth logic to run auth providers
+  AuthLogin(provider:any) {
+    return this.afAuth.auth.signInWithPopup(provider).then((result) => {
+      console.log('You have been successfully logged in!')
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 
 
