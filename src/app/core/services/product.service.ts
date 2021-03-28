@@ -9,7 +9,23 @@ import { Product } from '../model/product.interface';
 })
 export class ProductService {
 
-  products: Observable<Product[]> = new Observable();
+  constructor(private db: AngularFirestore){}
+
+  getProductList():Observable<any[]>{
+    return this.db.collection('products').snapshotChanges();
+  }
+
+  addProduct(payload: Product){
+    return this.db.collection('products').add(payload);
+  }
+
+  updateProduct(productId:string, payload: Product){
+    return this.db.doc('products' + productId).update(payload);
+  }
+
+  deleteProduct(productId:string){
+    return this.db.doc('products' + productId).delete();
+  }
 
 
 }
