@@ -17,6 +17,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './core/auth/auth.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,8 @@ import { AuthService } from './core/auth/auth.service';
     AngularFireAuthModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [
     AngularFireAuthModule,

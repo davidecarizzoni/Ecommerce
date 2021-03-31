@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
   declarations: [
     MenuComponent,
+    FooterComponent,
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
@@ -19,6 +21,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     FormsModule,
     ReactiveFormsModule,
     MenuComponent,
+    FooterComponent,
     MDBBootstrapModule
   ]
 })
