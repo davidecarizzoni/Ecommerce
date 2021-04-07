@@ -3,7 +3,7 @@
 
 
   <!-- ========================= SECTION CONTENT ========================= -->
-  <section class="section-content padding-y bg">
+  <section *ngIf="product" class="section-content padding-y bg">
       <div class="container">
 
       <article class="card">
@@ -12,20 +12,14 @@
                       <aside class="col-md-6"> <!-- Possibilità di mettere le diverse immagini -->
                               <article class="gallery-wrap">
                                   <div class="card img-big-wrap">
-                                      <a> <img src="assets/images/items/3.jpg"></a>
+                                      <a> <img src="assets/images/items/{{product.imgaeUrl}}"></a>
                                   </div> <!-- card img-big-wrap.// -->
-                                  <div class="thumbs-wrap">
-                                      <a href="#" class="item-thumb"> <img src="assets/images/items/3.jpg"></a>
-                                      <a href="#" class="item-thumb"> <img src="assets/images/items/3.jpg"></a>
-                                      <a href="#" class="item-thumb"> <img src="assets/images/items/3.jpg"></a>
-                                      <a href="#" class="item-thumb"> <img src="assets/images/items/3.jpg"></a>
-                                  </div> <!-- thumbs-wrap .// -->
                               </article> <!-- gallery-wrap .end// -->
                       </aside>
                       <main class="col-md-6">
                           <article>
-                              <a class="text-primary btn-link"> Categoria </a>
-                              <h3 class="title">Great product name goes here</h3>
+                              <a class="text-primary btn-link"> {{product.categoria}} </a>
+                              <h3 class="title"> {{product.shortDescription}}</h3>
                               <!-- Da decidere se permette di lasciare il rating, prob per ora lo eliminerç -->
                               <div>
                                   <ul class="rating-stars">
@@ -48,15 +42,15 @@
                               <hr>
 
                               <div class="mb-3">
-                                  <h6>Descrizione</h6> <!-- da tenere conto per salvare prod, queste caratteristiche devono esserci-->
+                                  <h6>{{product.description}}</h6> <!-- da tenere conto per salvare prod, queste caratteristiche devono esserci-->
                                   <ul class="list-dots mb-0">
-                                      <li>Made in Russia</li>
-                                      <li>Wolf leather </li>
-                                      <li>Rubber material bottom</li>
+                                      <li>{{product.car1}}</li>
+                                      <li>{{product.car2}}</li>
+                                      <li>{{product.car3}}</li>
                                   </ul>
                               </div>
 
-                              <div class="form-group">
+                              <!-- <div class="form-group">
                                   <label class="text-muted">Available sizes</label>
                                   <div>
                                       <label class="js-check btn btn-check active mr-1">
@@ -76,10 +70,10 @@
                                           <span>Babies</span>
                                       </label>
                                   </div>
-                              </div>
+                              </div> -->
 
                               <div class="mb-3">
-                                  <var class="price h4">$230.00</var> <br>
+                                  <var class="price h4">{{product.prezzo| currency:'EUR'}}</var> <br>
                               </div>
 
                               <div class="mb-4">
@@ -93,6 +87,7 @@
           </div> <!-- card-body.// -->
       </article>
       </div>
+
 
 
   </section>

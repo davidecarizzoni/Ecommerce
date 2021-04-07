@@ -2,14 +2,14 @@
 <app-menu [version]=2></app-menu>
 
 
-<section class="section-pagetop bg" style="height: 100px;">
+<!-- <section class="section-pagetop bg" style="height: 100px;">
   <div class="container">
-    <h2 class="title-page m-auto"> Category products </h2> <!-- thisrt/trousers oppure all-->
+    <h2 class="title-page m-auto"> Category products </h2>
   </div>
-</section>
+</section> -->
 
 
-<section class="section-content padding-y">
+<section *ngIf="products" class="section-content padding-y">
   <div class="container">
     <div class="row">
       <aside class="col-md-3">
@@ -24,11 +24,11 @@
                 </header>
                 <div class="filter-content collapse show" id="collapse_1">
                     <div class="card-body">
-                        <form class="pb-3">
+                        <form #searchForm="ngForm" class="pb-3" (ngSubmit)="search(searchForm)">
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search">
+                          <input type="text" ngModel #email="ngModel" type="search" name="search" class="form-control" placeholder="Search">
                           <div class="input-group-append">
-                            <button class="btn btn-light" type="button"><i class="fa fa-search"></i></button>
+                            <button class="btn btn-light" type="submit"><i class="fa fa-search"></i></button>
                           </div>
                         </div>
                         </form>
@@ -131,51 +131,37 @@
 
         <header class="border-bottom mb-4 pb-3">
           <div class="form-inline">
-            <span class="mr-md-auto">32 Items found </span>
+            <span class="mr-md-auto">{{products.length}} Items found </span>
           </div>
         </header>
 
         <div class="row">
-            <div class="col-md-4">
+            <ng-container *ngFor="let item of products">
+              <div class="col-md-4">
                 <figure class="card card-product-grid">
                     <div class="img-wrap">
-                        <span class="badge badge-danger"> NEW </span>
-                        <img src="assets/images/items/1.jpg">
-                        <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
+                        <!-- <span class="badge badge-danger"> NEW </span> -->
+                        <img src="assets/images/items/{{item.imgaeUrl}}">
+                        <a class="btn-overlay" routerLink="/detail/{{item.key}}"><i class="fa fa-search-plus"></i> Vai al dettaglio</a>
                     </div> <!-- img-wrap.// -->
                     <figcaption class="info-wrap">
                         <div class="fix-height">
-                            <a href="#" class="title">Great item name goes here</a>
+                            <a class="title">{{item.description}}</a>
                             <div class="price-wrap mt-2">
-                                <span class="price">$1280</span>
-                                <del class="price-old">$1980</del>
+                                <span class="price">{{item.prezzo| currency:'EUR'}}</span>
+                                <!--<del class="price-old">$1980</del> --><!--SCONTO-->
                             </div> <!-- price-wrap.// -->
                         </div>
-                        <a href="#" class="btn btn-block btn-primary">Add to cart </a>
+                        <a class="btn btn-block btn-primary text-light" (click)="addToCart()">Add to cart </a>
                     </figcaption>
                 </figure>
-            </div> <!-- col.// -->
-            <div class="col-md-4">
-                <figure class="card card-product-grid">
-                    <div class="img-wrap">
-                        <img src="assets/images/items/2.jpg">
-                        <a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
-                    </div> <!-- img-wrap.// -->
-                    <figcaption class="info-wrap">
-                        <div class="fix-height">
-                            <a href="#" class="title">Product name goes here just for demo item</a>
-                            <div class="price-wrap mt-2">
-                                <span class="price">$1280</span>
-                            </div> <!-- price-wrap.// -->
-                        </div>
-                        <a href="#" class="btn btn-block btn-primary">Add to cart </a>
-                    </figcaption>
-                </figure>
-            </div> <!-- col.// -->
+              </div>
+            </ng-container>
         </div> <!-- row end.// -->
 
 
         <!-- PAGINATION -->
+        <!-- ANCORA DA GESTIRE, se non faccio a tempo la tolgo -->
         <nav class="mt-4" aria-label="Page navigation sample">
           <ul class="pagination">
             <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>

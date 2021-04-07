@@ -1,9 +1,17 @@
 export interface Product {
-  id: string;
   marca: string;
   modello: string;
+  categoria: string;
   colore: string;
-  imgaeUrl: string;
+  imageUrl: string;
+
   prezzo: number;
-  qta: number; //da scalare solo all'acquisto
+  quantita: number;
+  taglia: string;
+
+  description: string;
+  shortDescription: string;
+  car1: string;
+  car2: string;
+  car3: string;
 }

@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
     this.router.navigateByUrl('/register');
   }
 
-  store(){
+  goToStore(){
     this.router.navigateByUrl('/store');
   }
 

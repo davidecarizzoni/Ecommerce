@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection  } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Product } from '../model/product.interface';
 
 @Injectable({
@@ -9,22 +7,26 @@ import { Product } from '../model/product.interface';
 })
 export class ProductService {
 
-  constructor(private db: AngularFirestore){}
+  productRef!: AngularFirestoreCollection<Product>;
 
-  getProductList():Observable<any[]>{
-    return this.db.collection('products').snapshotChanges();
+  constructor(private db: AngularFirestore){
+    this.productRef = db.collection('/Products');
+  }
+
+  getProductList(): AngularFirestoreCollection<Product>{
+    return this.productRef;
   }
 
   addProduct(payload: Product){
-    return this.db.collection('products').add(payload);
+    return this.productRef.add(payload);
   }
 
-  updateProduct(productId:string, payload: Product){
-    return this.db.doc('products' + productId).update(payload);
+  updateProduct(uid:string, payload: Product){
+    return this.db.doc('Products' + uid).update(payload);
   }
 
-  deleteProduct(productId:string){
-    return this.db.doc('products' + productId).delete();
+  deleteProduct(uid:string){
+    return this.db.doc('Products' + uid).delete();
   }
 
 
