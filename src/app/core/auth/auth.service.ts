@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { DatePipe } from '@angular/common'
-
+import { User } from '../model/user.interface';
+import { switchMap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -17,24 +18,52 @@ export class AuthService {
   eventAuthError$ = this.eventAuthError.asObservable();
   newUser: any;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore, public datepipe: DatePipe) {}
+  user$!: Observable<any>;
 
-  //scrivo in session così non ho problemi di sincronicità una volta loggato (Anche per legegre il nome nella barra di benvenuto)
-  googleAuth(){
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(()=>{
-      this.router.navigateByUrl("/store");
-    }).catch(error => {
-      this.eventAuthError.next(error);
-    })
+
+  constructor(private afAuth: AngularFireAuth, private router: Router, private db: AngularFirestore, public datepipe: DatePipe) {
+    this.user$ = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.db.doc<User>(`Users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+        }
+      })
+    )
+  }
+
+  async googleAuth(){
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const credential = await this.afAuth.auth.signInWithPopup(provider);
+    this.updateUserData(credential.user);
   }
 
   async facebookAuth() {
-    await this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(()=>{
+    const provider = new firebase.auth.FacebookAuthProvider();
+    const credential = await this.afAuth.auth.signInWithPopup(provider);
+    this.updateUserData(credential.user);
+  }
+
+  private updateUserData(user: any) {
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`Users/${user.uid}`);
+    const data = {
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      creationTime: this.datepipe.transform(new Date(), 'yyyy-MM-dd H:mm'),
+      role: 'network user'
+    }
+
+    userRef.set(data, { merge: true }).then(()=>{
       this.router.navigateByUrl("/store");
     }).catch(error => {
       this.eventAuthError.next(error);
     })
+
   }
+
+
 
   async loginWithEmail(email: string, password: string ) {
     await this.afAuth.auth.signInWithEmailAndPassword(email, password).then(()=>{
@@ -64,28 +93,10 @@ export class AuthService {
     })
   }
 
-
-  async createUserWithGoogle(){
-   await this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((userCredential) => {
-      this.newUser = userCredential.user;
-      console.log(this.newUser);
-      userCredential.user?.updateProfile({
-        displayName: userCredential.user.displayName
-      });
-
-      this.insertUserData(userCredential).then(()=>{
-        this.router.navigate(['/homr'])
-      });
-    }).catch((error:any) => {
-      this.eventAuthError.next(error);
-    })
-  }
-
   async insertUserData(userCredential: any){
     await this.db.doc(`Users/${userCredential.user.uid}`).set({
       email: this.newUser.email,
-      firstname: this.newUser.firstName,
-      lastname: this.newUser.lastName,
+      displayName: this.newUser.firstName + this.newUser.lastName,
       creationTime: this.datepipe.transform(new Date(), 'yyyy-MM-dd H:mm'),
       role: 'network user'
     })
@@ -95,9 +106,5 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
-  async getUid() {
-     let uid =  this.afAuth.auth.currentUser;
-    return uid;
-  }
 
 }
