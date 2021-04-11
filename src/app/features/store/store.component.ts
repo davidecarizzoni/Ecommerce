@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/core/model/product.interface';
 import { map } from 'rxjs/operators';
-import { ProductService } from 'src/app/core/services/product/product.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { CartService } from 'src/app/core/services/cart/cart.service';
+import { Observable } from 'rxjs';
+import { Course } from 'src/app/core/model/course.interface';
+import { CourseService } from 'src/app/core/services/course/course.service';
 
 
 @Component({
@@ -13,37 +15,16 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 })
 export class StoreComponent implements OnInit {
 
-  user:any;
-  products: any;
+  courses$!: Observable<Course[]>;
+  beginnersCourses$!: Observable<Course[]>;
+  advancedCourses$!: Observable<Course[]>;
 
-  constructor(private prodService: ProductService, private auth: AuthService, private cart:CartService) { }
+
+  constructor(private coursesService: CourseService, private auth: AuthService, private cart:CartService) { }
 
   ngOnInit(): void {
-    this.getProductList();
-    this.auth.getUserState().subscribe((user:any) => {
-      this.user = user;
-    })
-  }
+    this.courses$ = this.coursesService.getAllCourses();
 
-  getProductList() {
-    this.prodService.getProductList().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.doc.id, ...c.payload.doc.data() })
-        )
-      )
-    ).subscribe(products => {
-      this.products = products;
-    });
-  }
-
-  addToCart(productUid: string){
-    this.cart.add(this.user.uid, productUid)
-  }
-
-
-  search(form:any){
-    console.log("Ricerca prodotto per: " + form.value.search)
   }
 
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { CourseService } from 'src/app/core/services/course/course.service';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,10 @@ export class LoginComponent implements OnInit {
   authError: any;
   user:any;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private  courseService:CourseService) {}
 
   ngOnInit() {
+    this.courseService.uploadData();
     this.authService.eventAuthError$.subscribe( data => {
       this.authError = data;
     })
@@ -36,3 +38,5 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
+
