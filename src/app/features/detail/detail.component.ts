@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/core/model/product.interface';
 import { map } from 'rxjs/operators';
-import { ProductService } from 'src/app/core/services/product.service';
+import { ProductService } from 'src/app/core/services/product/product.service';
 
 @Component({
   selector: 'app-detail',
@@ -18,18 +18,17 @@ export class DetailComponent implements OnInit {
   constructor(private prodService: ProductService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.catchUid();
-    this.getProductList();
+    this.getProduct();
   }
 
   catchUid(){
     this.activatedRoute.paramMap.subscribe( params => {
       this.uid = String(params.get('uid'));
-      console.log("Product detail uid: "+ this.uid)
     })
   }
 
-  getProductList() {
+  getProduct() {
+    this.catchUid();
     this.prodService.getProductList().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>

@@ -57,17 +57,17 @@ export class AuthService {
 
     userRef.set(data, { merge: true }).then(()=>{
       this.router.navigateByUrl("/store");
+      localStorage.setItem("userUid", (String)(this.afAuth.auth.currentUser?.uid));
     }).catch(error => {
       this.eventAuthError.next(error);
     })
 
   }
 
-
-
   async loginWithEmail(email: string, password: string ) {
     await this.afAuth.auth.signInWithEmailAndPassword(email, password).then(()=>{
-      this.router.navigateByUrl("/home");
+      this.router.navigateByUrl("/store");
+      localStorage.setItem("userUid", (String)(this.afAuth.auth.currentUser?.uid));
     }).catch( error => {
       this.eventAuthError.next(error);
     })
@@ -75,6 +75,7 @@ export class AuthService {
 
   logout(){
     this.afAuth.auth.signOut();
+    localStorage.setItem("userUid", '');
     this.router.navigateByUrl("/login");
   }
 
@@ -84,8 +85,8 @@ export class AuthService {
       userCredential.user?.updateProfile({
         displayName: user.firstName + ' ' + user.lastName
       });
-
       this.insertUserData(userCredential).then(()=>{
+        localStorage.setItem("userUid", (String)(this.afAuth.auth.currentUser?.uid));
         this.router.navigateByUrl('/store')
       });
     }).catch((error) => {

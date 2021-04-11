@@ -43,4 +43,8 @@ export class MenuComponent implements OnInit {
     this.router.navigateByUrl('/store');
   }
 
+  goToCart(){
+    this.router.navigateByUrl('/cart');
+  }
+
 }

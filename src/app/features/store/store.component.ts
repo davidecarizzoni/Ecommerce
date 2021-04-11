@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/core/model/product.interface';
-import { ProductService } from 'src/app/core/services/product.service';
 import { map } from 'rxjs/operators';
+import { ProductService } from 'src/app/core/services/product/product.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { CartService } from 'src/app/core/services/cart/cart.service';
 
 
 @Component({
@@ -11,13 +13,16 @@ import { map } from 'rxjs/operators';
 })
 export class StoreComponent implements OnInit {
 
+  user:any;
   products: any;
-  imgPath: string = '../../../assets/images/items/'
 
-  constructor(private prodService: ProductService) { }
+  constructor(private prodService: ProductService, private auth: AuthService, private cart:CartService) { }
 
   ngOnInit(): void {
     this.getProductList();
+    this.auth.getUserState().subscribe((user:any) => {
+      this.user = user;
+    })
   }
 
   getProductList() {
@@ -32,22 +37,13 @@ export class StoreComponent implements OnInit {
     });
   }
 
+  addToCart(productUid: string){
+    this.cart.add(this.user.uid, productUid)
+  }
+
 
   search(form:any){
     console.log("Ricerca prodotto per: " + form.value.search)
   }
-
-  addToCart(){
-
-  }
-
-  createStore(){
-    let prod1:Product = { marca:'Gucci', modello:'Estate', categoria: 'Felpa', colore:'rosso', imageUrl: '2.PNG',
-                          prezzo: 890, quantita:2, taglia: 'L',
-                          description:'Questa è la descrizione di prova', shortDescription:'Descrizione corta', car1:'caratteristica 1', car2:'caratteristica 2', car3: 'caratteristica3' }
-
-    this.prodService.addProduct(prod1);
-  }
-
 
 }
