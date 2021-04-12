@@ -15,28 +15,29 @@ export class CourseService {
   constructor(private db: AngularFirestore) { }
 
 
-   getAllCourses(): Observable<Course[]> {
-    return this.db.collection('courses', ref=> ref.orderBy("description"))
+  getAllCourses(): Observable<Course[]> {
+    return this.db.collection('courses')
         .snapshotChanges()
         .pipe(
           map(snaps => convertSnaps<Course>(snaps)),
             first());
   }
 
-
-
-  //=========================== METHOD TO UPLOAD INITIAL DATA======================================
-  async  uploadData() {
-    const courses = await this.db.collection('courses');
-    for (let course of Object.values(COURSES)) {
-      const newCourse = this.removeId(course);
-      const courseRef = await courses.add(newCourse);
-    }
+  findCourseByUrl(url: string): Observable<Course> {
+    return this.db.collection('courses', ref=> ref.where("url", "==", url))
+      .snapshotChanges()
+      .pipe(
+          map((snaps) => {
+            let courses = convertSnaps<Course>(snaps)
+            return courses[0];
+          }),
+          first()
+        )
   }
 
-  removeId(data: any) {
-    const newData: any = {...data};
-    delete newData.id;
-    return newData;
-  }
+
+
+
+
+
 }

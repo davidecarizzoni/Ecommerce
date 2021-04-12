@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/core/model/product.interface';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { CartService } from 'src/app/core/services/cart/cart.service';
 import { Observable } from 'rxjs';
@@ -15,16 +15,22 @@ import { CourseService } from 'src/app/core/services/course/course.service';
 })
 export class StoreComponent implements OnInit {
 
-  courses$!: Observable<Course[]>;
-  beginnersCourses$!: Observable<Course[]>;
-  advancedCourses$!: Observable<Course[]>;
+  courses!: Course[];
+  user: any;
 
-
-  constructor(private coursesService: CourseService, private auth: AuthService, private cart:CartService) { }
+  constructor(private coursesService: CourseService, private auth: AuthService, private cartService:CartService) { }
 
   ngOnInit(): void {
-    this.courses$ = this.coursesService.getAllCourses();
+    this.auth.getUserState().subscribe(user => this.user = user)
+    this.coursesService.getAllCourses().subscribe(courses => this.courses = courses)
+  }
 
+  addToCart(url: any){
+    if(this.user == null){
+      console.log("Nessun utenten loggato")
+    }else{
+      this.cartService.add(this.user.uid, url);
+    }
   }
 
 }

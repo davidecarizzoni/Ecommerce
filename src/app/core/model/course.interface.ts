@@ -1,6 +1,6 @@
 
 export interface Course {
-
+  id?: string;
   titles: {
     description:string;
     longDescription: string;
@@ -11,6 +11,7 @@ export interface Course {
   spec3: String;
 
   imageUrl: string;
+  url: string;
   categories: string[];
   difficult: string[];
 

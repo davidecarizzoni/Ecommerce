@@ -3,6 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/core/model/product.interface';
 import { map } from 'rxjs/operators';
 import { ProductService } from 'src/app/core/services/product/product.service';
+import { Course } from 'src/app/core/model/course.interface';
+import { CourseService } from 'src/app/core/services/course/course.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { CartService } from 'src/app/core/services/cart/cart.service';
 
 @Component({
   selector: 'app-detail',
@@ -11,33 +15,28 @@ import { ProductService } from 'src/app/core/services/product/product.service';
 })
 export class DetailComponent implements OnInit {
 
-  products: any;
-  product!: any;
-  uid!: string;
+  course: any;
+  url!: any;
+  user:any;
 
-  constructor(private prodService: ProductService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private courseService: CourseService, private auth:AuthService, private cartService: CartService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getProduct();
+    this.catchUrl();
+    this.auth.getUserState().subscribe(user => this.user = user)
+    this.courseService.findCourseByUrl(this.url).subscribe(course => this.course = course)
   }
 
-  catchUid(){
-    this.activatedRoute.paramMap.subscribe( params => {
-      this.uid = String(params.get('uid'));
-    })
+  catchUrl(){
+    this.route.paramMap.subscribe( params => this.url = String(params.get('url')))
   }
 
-  getProduct() {
-    this.catchUid();
-    this.prodService.getProductList().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.doc.id, ...c.payload.doc.data() })
-        )
-      )
-    ).subscribe(products => {
-      this.products = products;
-      this.product = products.find(x=>x.key == this.uid)
-    });
+  addToCart(url: any){
+    if(this.user == null){
+      console.log("Nessun utenten loggato")
+    }else{
+      this.cartService.add(this.user.uid, url);
+    }
   }
+
 }

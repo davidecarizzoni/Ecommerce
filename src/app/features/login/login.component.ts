@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService,private  courseService:CourseService) {}
 
   ngOnInit() {
-    this.courseService.uploadData();
     this.authService.eventAuthError$.subscribe( data => {
       this.authError = data;
     })

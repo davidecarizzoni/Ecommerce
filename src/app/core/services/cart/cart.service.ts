@@ -13,7 +13,7 @@ export class CartService {
   cartRef!: AngularFirestoreCollection<Cart>;
 
   constructor(private db: AngularFirestore){
-    this.cartRef = this.db.collection('/Carts');
+    this.cartRef = this.db.collection('/carts');
   }
 
   async add(userUid:string, productUid:string){
@@ -47,7 +47,7 @@ export class CartService {
   }
 
   async getCart(uid: string){
-    return this.db.doc(`Carts/${uid}`).get();
+    return this.db.doc(`carts/${uid}`).get();
   }
 
 

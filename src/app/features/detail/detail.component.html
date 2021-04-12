@@ -1,9 +1,9 @@
 <!-- MENU -->
-<app-menu [version]=2></app-menu>
+<app-menu [version]=1></app-menu>
 
 
   <!-- ========================= SECTION CONTENT ========================= -->
-  <section *ngIf="product" class="section-content padding-y bg">
+  <section *ngIf="course" class="section-content padding-y bg">
       <div class="container">
 
       <article class="card">
@@ -11,15 +11,15 @@
                   <div class="row">
                       <aside class="col-md-6"> <!-- Possibilità di mettere le diverse immagini -->
                               <article class="gallery-wrap">
-                                  <div class="card img-big-wrap">
-                                      <a> <img src="assets/images/items/{{product.imgaeUrl}}"></a>
+                                  <div class="card img-wrap mt-3">
+                                      <img src="{{course.imageUrl}}">
                                   </div> <!-- card img-big-wrap.// -->
                               </article> <!-- gallery-wrap .end// -->
                       </aside>
                       <main class="col-md-6">
                           <article>
-                              <a class="text-primary btn-link"> {{product.categoria}} </a>
-                              <h3 class="title"> {{product.shortDescription}}</h3>
+                              <a class="text-primary btn-link"> {{course.categories}} </a>
+                              <h3 class="title"> {{course.titles.description}}</h3>
                               <!-- Da decidere se permette di lasciare il rating, prob per ora lo eliminerç -->
                               <div>
                                   <ul class="rating-stars">
@@ -42,11 +42,11 @@
                               <hr>
 
                               <div class="mb-3">
-                                  <h6>{{product.description}}</h6> <!-- da tenere conto per salvare prod, queste caratteristiche devono esserci-->
+                                  <h6>{{course.titles.description}}</h6> <!-- da tenere conto per salvare prod, queste caratteristiche devono esserci-->
                                   <ul class="list-dots mb-0">
-                                      <li>{{product.car1}}</li>
-                                      <li>{{product.car2}}</li>
-                                      <li>{{product.car3}}</li>
+                                      <li>{{course.spec1}}</li>
+                                      <li>{{course.spec2}}</li>
+                                      <li>{{course.spec3}}</li>
                                   </ul>
                               </div>
 
@@ -73,22 +73,35 @@
                               </div> -->
 
                               <div class="mb-3">
-                                  <var class="price h4">{{product.prezzo| currency:'EUR'}}</var> <br>
+                                  <var class="price h4">{{course.price| currency:'EUR'}}</var> <br>
                               </div>
 
                               <div class="mb-4">
                                   <!-- <a href="#" class="btn btn-primary mr-1">Buy now</a> -->
-                                  <button class="btn btn-primary" type="button">Add to card</button>
+                                  <button class="btn btn-primary" type="button" (click)="addToCart(course.url)">Add to card</button>
                               </div>
+
 
                           </article> <!-- product-info-aside .// -->
                       </main> <!-- col.// -->
                   </div> <!-- row.// -->
+                  <hr>
+                  <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                      proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <br>
+                      Questa sarebbe una descrizione lunga per ogni corso da inserire all'interno del
+                      database ma sinceramente ora come ora non ho sbatti XD.
+                  </p>
           </div> <!-- card-body.// -->
       </article>
       </div>
 
+    </section>
+    <div class="accordion">
 
-
-  </section>
-  <!-- ========================= SECTION CONTENT END// ========================= -->
+    </div>
+    <app-footer></app-footer>

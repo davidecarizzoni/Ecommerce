@@ -25,7 +25,7 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          return this.db.doc<User>(`Users/${user.uid}`).valueChanges();
+          return this.db.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
@@ -46,12 +46,12 @@ export class AuthService {
   }
 
   private updateUserData(user: any) {
-    const userRef: AngularFirestoreDocument<User> = this.db.doc(`Users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${user.uid}`);
     const data = {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      creationTime: this.datepipe.transform(new Date(), 'yyyy-MM-dd H:mm'),
+      creationTime: this.datepipe.transform(new Date(), 'yyyy-MM-dd H:mm:ss'),
       role: 'network user'
     }
 
@@ -95,10 +95,10 @@ export class AuthService {
   }
 
   async insertUserData(userCredential: any){
-    await this.db.doc(`Users/${userCredential.user.uid}`).set({
+    await this.db.doc(`users/${userCredential.user.uid}`).set({
       email: this.newUser.email,
       displayName: this.newUser.firstName + this.newUser.lastName,
-      creationTime: this.datepipe.transform(new Date(), 'yyyy-MM-dd H:mm'),
+      creationTime: this.datepipe.transform(new Date(), 'yyyy-MM-dd H:mm:ss'),
       role: 'network user'
     })
   }
