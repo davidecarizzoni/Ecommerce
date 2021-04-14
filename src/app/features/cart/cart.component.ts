@@ -19,9 +19,9 @@ export class CartComponent implements OnInit {
   courses:any;
   userUid: any;
   totCost: number = 0;
+  cartCourses: any = [];
 
   constructor(private cartService: CartService, private courseService: CourseService, private auth:AuthService) { }
-
 
   ngOnInit(): void {
     this.totCost = 0;
@@ -31,14 +31,21 @@ export class CartComponent implements OnInit {
   }
 
   getCart(){
-    this.cartService.findCartByUserUid(this.userUid).subscribe(cart => this.cart = cart)
+    this.cartService.findCartByUserUid(this.userUid).subscribe(cart => {
+      this.cart = cart;
+      this.cart.productList.forEach((element:any) => {
+          this.courses.forEach((element1:any) => {
+            if(element == element1.url){
+              this.cartCourses.push(element1);
+              this.totCost+= element1.price;
+            }
+          });
+      });
+    })
   }
 
   removeToCart(courseUrl:string){
     this.cartService.remove(this.userUid, courseUrl).then(()=>this.getCart())
   }
 
-  addPriceElement(price:number){
-    this.totCost = this.totCost+price;
-  }
 }

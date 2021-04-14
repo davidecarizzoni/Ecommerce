@@ -27,31 +27,35 @@
       </thead>
       <tbody>
 
-      <ng-container *ngIf="cart">
-        <tr *ngFor="let item of cart.productList">
-          <ng-container *ngFor="let course of courses">
-            <ng-container *ngIf="item===course.url">
-              <td>
-                <figure class="itemside">
-                    <div class="aside"><img src="{{course.imageUrl}}" class="img-md"></div>
-                    <figcaption class="info">
-                        <a class="title text-dark"> {{course.titles.description}}</a>
-                        <p class="text-muted small"> {{course.categories}}</p>
-                    </figcaption>
-                </figure>
-              </td>
-              <td>
-                <div class="price-wrap">
-                    <var class="price">{{course.price | currency:'EUR'}} </var>
-                </div> <!-- price-wrap .// -->
-              </td>
-            <td class="text-right">
-            <a class="btn btn-light" (click)="removeToCart(course.url)"> Remove</a>
-            </td>
-            </ng-container>
+        <ng-container *ngIf="cart">
+          <ng-container *ngFor="let item of cart.productList">
+            <tr>
+              <ng-container *ngFor="let course of courses">
+                <ng-container *ngIf="item==course.url">
+                  <td >
+                    <figure class="itemside">
+                        <div class="aside"><img src="{{course.imageUrl}}" class="img-md"></div>
+                        <figcaption class="info">
+                            <a class="title text-dark"> {{course.titles.description}}</a>
+                            <p class="text-muted small"> {{course.categories}}</p>
+                        </figcaption>
+                    </figure>
+                  </td>
+
+                  <td>
+                    <div class="price-wrap">
+                        <var class="price">{{course.price | currency:'EUR'}} </var>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                  <a class="btn btn-light" (click)="removeToCart(course.url)"> Remove</a>
+                  </td>
+                </ng-container>
+              </ng-container>
+            </tr>
           </ng-container>
-        </tr>
-      </ng-container>
+
+        </ng-container>
 
       </tbody>
 
@@ -69,11 +73,18 @@
 
       </main> <!-- col.// -->
           <aside class="col-md-3">
-              <div class="card">
+              <div *ngIf="totCost>0" class="card">
                   <div class="card-body">
                           <dl class="dlist-align">
+                            <dt>Number of courses:</dt>
+                            <dd class="text-right"> {{cart.productList.length }} </dd>
+                          </dl>
+                          <dl class="dlist-align">
                             <dt>Total price:</dt>
-                            <dd class="text-right"> USD</dd>
+                            <dd class="text-right"> {{totCost | currency:'EUR'}} </dd>
+                          </dl>
+                          <dl class="align-items">
+                            <button class="btn btn-primary center">Acquista</button>
                           </dl>
                           <hr>
                           <p class="text-center mb-3">
