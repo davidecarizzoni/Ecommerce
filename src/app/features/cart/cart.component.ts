@@ -4,6 +4,8 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 import { map } from 'rxjs/operators';
 import { ProductService } from 'src/app/core/services/product/product.service';
 import { Product } from 'src/app/core/model/product.interface';
+import { CourseService } from 'src/app/core/services/course/course.service';
+import { Course } from 'src/app/core/model/course.interface';
 
 
 @Component({
@@ -14,52 +16,29 @@ import { Product } from 'src/app/core/model/product.interface';
 export class CartComponent implements OnInit {
 
   cart:any;
-  carts: any;
+  courses:any;
+  userUid: any;
+  totCost: number = 0;
 
-  products: any;
-  product: any;
+  constructor(private cartService: CartService, private courseService: CourseService, private auth:AuthService) { }
 
-  list!: Product[];
 
-  constructor(private cartService: CartService, private productService: ProductService) { }
-
-  async ngOnInit(): Promise<void> {
-   (await this.cartService.getCart((String)(localStorage.getItem('userUid')))).subscribe(ref => {
-    if(!ref.exists){
-      console.log("No document exist - da gestire")
-    }else{
-      this.cart = ref.data();
-      if(this.cart!=undefined){
-        console.log(this.cart.productList)
-      }
-    }
-  });
+  ngOnInit(): void {
+    this.totCost = 0;
+    this.userUid = localStorage.getItem("userUid");
+    this.courseService.getAllCourses().subscribe(courses => this.courses = courses)
+    this.getCart();
   }
 
-  getCart() {
-    this.cartService.getCartList().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.doc.id, ...c.payload.doc.data() })
-        )
-      )
-    ).subscribe(carts => {
-      this.carts = carts;
-      this.cart = carts.find(x=>x.key == localStorage.getItem('userUid'))
-      console.log(this.cart.productList)
-    });
+  getCart(){
+    this.cartService.findCartByUserUid(this.userUid).subscribe(cart => this.cart = cart)
   }
 
-  getProductList(){
-    this.productService.getProductList().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.doc.id, ...c.payload.doc.data() })
-        )
-      )
-    ).subscribe(products => {
-      this.products = products;
-    });
+  removeToCart(courseUrl:string){
+    this.cartService.remove(this.userUid, courseUrl).then(()=>this.getCart())
   }
 
+  addPriceElement(price:number){
+    this.totCost = this.totCost+price;
+  }
 }

@@ -1,5 +1,5 @@
 <!-- MENU -->
-<app-menu [version]=1></app-menu>
+<app-menu [version]=1 *ngIf="course"></app-menu>
 
 
   <!-- ========================= SECTION CONTENT ========================= -->
@@ -73,7 +73,7 @@
                               </div> -->
 
                               <div class="mb-3">
-                                  <var class="price h4">{{course.price| currency:'EUR'}}</var> <br>
+                                  <var class="price h4">{{course.price | currency:'EUR'}}</var> <br>
                               </div>
 
                               <div class="mb-4">

@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Cart } from '../../model/cart.interface';
 import { firestore } from 'firebase';
-
+import { Observable } from 'rxjs';
+import { first, map } from 'rxjs/operators';
+import { convertSnaps } from '../db-utils';
 
 
 @Injectable({
@@ -46,9 +48,30 @@ export class CartService {
     return this.cartRef;
   }
 
-  async getCart(uid: string){
-    return this.db.doc(`carts/${uid}`).get();
+  getCart(uid: string): Observable<Cart> {
+    return this.db.doc(`carts/${uid}`)
+    .snapshotChanges()
+      .pipe(
+          map((snaps) => {
+            let carts = convertSnaps<Cart>(snaps)
+            return carts[0];
+          }),
+          first()
+        )
   }
+
+  findCartByUserUid(userUid: string): Observable<Cart> {
+    return this.db.collection('carts', ref=> ref.where("userUid", "==", userUid))
+      .snapshotChanges()
+      .pipe(
+          map((snaps) => {
+            let carts = convertSnaps<Cart>(snaps)
+            return carts[0];
+          }),
+          first()
+        )
+  }
+
 
 
 

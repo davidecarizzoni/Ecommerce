@@ -24,7 +24,7 @@ export class CourseService {
   }
 
   findCourseByUrl(url: string): Observable<Course> {
-    return this.db.collection('courses', ref=> ref.where("url", "==", url))
+    return this.db.collection('courses/', ref=> ref.where("url", "==", url))
       .snapshotChanges()
       .pipe(
           map((snaps) => {
@@ -34,6 +34,8 @@ export class CourseService {
           first()
         )
   }
+
+
 
 
 

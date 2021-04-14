@@ -1,8 +1,8 @@
 <!-- MENU -->
-<app-menu [version]=1></app-menu>
+<app-menu *ngIf="cart && courses" [version]=1></app-menu>
 
     <!-- ========================= SECTION PAGETOP ========================= -->
-    <section *ngIf="cart" class="section-pagetop bg">
+    <section *ngIf="cart && courses"  class="section-pagetop bg">
       <div class="container">
           <h2 class="title-page"> Carrello </h2>
       </div> <!-- container //  -->
@@ -21,19 +21,40 @@
       <thead class="text-muted">
       <tr class="small text-uppercase">
         <th scope="col">Product</th>
-        <th scope="col" width="120">Quantity</th>
         <th scope="col" width="120">Price</th>
         <th scope="col" class="text-right" width="200"> </th>
       </tr>
       </thead>
       <tbody>
 
-      <tr *ngFor="let item of cart.productList">
-          <td> {{item.uid}}
-          </td>
-      </tr>
+      <ng-container *ngIf="cart">
+        <tr *ngFor="let item of cart.productList">
+          <ng-container *ngFor="let course of courses">
+            <ng-container *ngIf="item===course.url">
+              <td>
+                <figure class="itemside">
+                    <div class="aside"><img src="{{course.imageUrl}}" class="img-md"></div>
+                    <figcaption class="info">
+                        <a class="title text-dark"> {{course.titles.description}}</a>
+                        <p class="text-muted small"> {{course.categories}}</p>
+                    </figcaption>
+                </figure>
+              </td>
+              <td>
+                <div class="price-wrap">
+                    <var class="price">{{course.price | currency:'EUR'}} </var>
+                </div> <!-- price-wrap .// -->
+              </td>
+            <td class="text-right">
+            <a class="btn btn-light" (click)="removeToCart(course.url)"> Remove</a>
+            </td>
+            </ng-container>
+          </ng-container>
+        </tr>
+      </ng-container>
 
       </tbody>
+
       </table>
 
       <div class="card-body border-top">
@@ -42,25 +63,17 @@
       </div>
       </div> <!-- card.// -->
 
-      <div class="alert alert-success mt-3">
-          <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
-      </div>
+      <!-- <div class="alert alert-success mt-3">
+          <p class="icontext"><i class="icon text-success fa fa-truck"></i> Consegna per email</p>
+      </div> -->
 
-          </main> <!-- col.// -->
+      </main> <!-- col.// -->
           <aside class="col-md-3">
               <div class="card">
                   <div class="card-body">
                           <dl class="dlist-align">
                             <dt>Total price:</dt>
-                            <dd class="text-right">USD 568</dd>
-                          </dl>
-                          <dl class="dlist-align">
-                            <dt>Discount:</dt>
-                            <dd class="text-right">USD 658</dd>
-                          </dl>
-                          <dl class="dlist-align">
-                            <dt>Total:</dt>
-                            <dd class="text-right  h5"><strong>$1,650</strong></dd>
+                            <dd class="text-right"> USD</dd>
                           </dl>
                           <hr>
                           <p class="text-center mb-3">
@@ -76,5 +89,5 @@
       </section>
 
 
-      <app-footer></app-footer>
+      <app-footer *ngIf="cart && courses" class="fixed-bottom"></app-footer>
 
