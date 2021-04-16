@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FooterComponent } from './footer/footer.component';
+import { GooglePayButtonModule } from '@google-pay/button-angular';
+
 
 
 @NgModule({
@@ -15,14 +17,16 @@ import { FooterComponent } from './footer/footer.component';
     MDBBootstrapModule.forRoot(),
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GooglePayButtonModule
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
     MenuComponent,
     FooterComponent,
-    MDBBootstrapModule
+    MDBBootstrapModule,
+    GooglePayButtonModule
   ]
 })
 export class SharedModule { }

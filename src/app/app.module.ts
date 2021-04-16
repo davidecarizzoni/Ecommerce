@@ -18,6 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './core/auth/auth.service';
 import { SharedModule } from './shared/shared.module';
+import { GooglePayButtonModule } from '@google-pay/button-angular';
+
 
 @NgModule({
   declarations: [
@@ -34,12 +36,15 @@ import { SharedModule } from './shared/shared.module';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    GooglePayButtonModule
+
   ],
   exports: [
     AngularFireAuthModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GooglePayButtonModule
   ],
   providers: [AuthService, DatePipe],
   bootstrap: [AppComponent]

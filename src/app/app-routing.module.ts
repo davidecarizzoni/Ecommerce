@@ -9,8 +9,7 @@ const routes: Routes = [
   { path: 'store', loadChildren: () => import('./features/store/store.module').then(m => m.StoreModule) },
   { path: 'detail', loadChildren: () => import('./features/detail/detail.module').then(m => m.DetailModule) },
   { path: 'detail/:url', loadChildren: () => import('./features/detail/detail.module').then(m => m.DetailModule)},
-  { path: 'cart', loadChildren: () => import('./features/cart/cart.module').then(m => m.CartModule) },
-  { path: 'checkout', loadChildren: () => import('./features/checkout/checkout.module').then(m => m.CheckoutModule) }];
+  { path: 'cart', loadChildren: () => import('./features/cart/cart.module').then(m => m.CartModule) }]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
