@@ -81,7 +81,7 @@
                           </dl>
                           <dl class="dlist-align">
                             <dt>Total price:</dt>
-                            <dd class="text-right" > {{totCost | currency:'EUR'}}</dd>
+                            <dd class="text-right" > {{totCost | currency:'USD'}}</dd>
                           </dl>
                           <dl class="align-items">
                             <button class="btn btn-primary center" (click)="pay(totCost)">Acquista</button>
@@ -109,5 +109,5 @@
       </section>
 
 
-      <app-footer *ngIf="cart && courses" class="fixed-bottom"></app-footer>
+      <app-footer *ngIf="cart && courses" class="position-relative"></app-footer>
 

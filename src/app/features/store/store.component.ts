@@ -6,6 +6,7 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 import { Observable } from 'rxjs';
 import { Course } from 'src/app/core/model/course.interface';
 import { CourseService } from 'src/app/core/services/course/course.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -16,13 +17,32 @@ import { CourseService } from 'src/app/core/services/course/course.service';
 export class StoreComponent implements OnInit {
 
   courses!: Course[];
-  user: any;
+  coursesFiltered!: Course[];
+  coursesCategoryRest!: Course[];
+  coursesCategoryServerless!: Course[];
 
-  constructor(private coursesService: CourseService, private auth: AuthService, private cartService:CartService) { }
+  user: any;
+  serverLess: boolean = false;
+  restAngular: boolean = false;
+
+  massimo: number = 1000;
+  minimo: number = 0;
+
+
+
+  //COUNT: da implementare
+
+  constructor(private coursesService: CourseService, private auth: AuthService, private cartService:CartService) {}
 
   ngOnInit(): void {
     this.auth.getUserState().subscribe(user => this.user = user)
     this.coursesService.getAllCourses().subscribe(courses => this.courses = courses)
+    this.coursesService.getCoursesByCategory('rest-angular').subscribe(courses => this.coursesCategoryRest = courses)
+    this.coursesService.getCoursesByCategory('serverless-angular').subscribe(courses => this.coursesCategoryServerless = courses)
+    this.coursesService.searchCourses('Core').subscribe(courses =>{
+      this.coursesFiltered = courses
+      console.log(this.coursesFiltered)
+    })
   }
 
   addToCart(url: any){
@@ -33,4 +53,37 @@ export class StoreComponent implements OnInit {
     }
   }
 
+  setCategory(cat:string){
+
+    if(cat=='rest') this.restAngular = !this.restAngular;
+    if(cat=='serverless') this.serverLess = !this.serverLess;
+
+    if((this.serverLess==true && this.restAngular==true) || (this.serverLess==false && this.restAngular==false))
+      this.coursesService.getAllCourses().subscribe(courses => this.courses = courses)
+
+    if(this.serverLess==true && this.restAngular==false)
+      this.serverLess ? this.coursesService.getCoursesByCategory('serverless-angular').subscribe(courses => this.courses = courses) : this.coursesService.getAllCourses().subscribe(courses => this.courses = courses)
+
+    if(this.serverLess==false && this.restAngular==true){
+      this.restAngular ? this.coursesService.getCoursesByCategory('rest-angular').subscribe(courses => this.courses = courses) : this.coursesService.getAllCourses().subscribe(courses => this.courses = courses)
+    }
+  }
+
+  setPrice(form:any){
+   this.minimo = form.value.min;
+   this.massimo = form.value.max;
+  }
+
+  searchCourse(form:any){
+    console.log(form.value.search);
+  }
+
+  setDifficult(form:any){
+    console.log(form.value.beginner + " "+form.value.intemediate)
+  }
+
 }
+function filteredCourses(filteredCourses: any) {
+  throw new Error('Function not implemented.');
+}
+

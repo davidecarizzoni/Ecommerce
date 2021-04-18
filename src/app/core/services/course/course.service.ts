@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Product } from '../../model/product.interface';
 import { first, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Course } from '../../model/course.interface';
 import { convertSnaps } from '../db-utils';
-import { COURSES } from 'db-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
 
-  constructor(private db: AngularFirestore) { }
+  coursesRef!: AngularFirestoreCollection<Course>;
+
+
+  constructor(private db: AngularFirestore) {
+    this.coursesRef = this.db.collection('courses');
+
+  }
 
 
   getAllCourses(): Observable<Course[]> {
@@ -35,11 +39,20 @@ export class CourseService {
         )
   }
 
+  getCoursesByCategory(category: string):  Observable<Course[]> {
+    return this.db.collection('courses/', ref => ref.where('categories', 'array-contains', category))
+      .snapshotChanges()
+      .pipe(
+        map(snaps => convertSnaps<Course>(snaps)),
+          first());
+  }
 
-
-
-
-
-
-
+  searchCourses(search:string):  Observable<Course[]> {
+    return this.db.collection('courses/', ref => ref.where('titles.description', "array-contains", search))
+      .snapshotChanges()
+      .pipe(
+        map(snaps => convertSnaps<Course>(snaps)),
+          first());
+  }
 }
+

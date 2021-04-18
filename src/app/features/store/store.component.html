@@ -20,25 +20,19 @@
                 <header class="card-header">
                     <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
                         <i class="icon-control fa fa-chevron-down"></i>
-                        <h6 class="title">Product type</h6>
+                        <h6 class="title">Courses</h6>
                     </a>
                 </header>
                 <div class="filter-content collapse show" id="collapse_1">
                     <div class="card-body">
-                        <form #searchForm="ngForm" class="pb-3">
+                        <form #searchForm="ngForm" class="pb-3" (ngSubmit)="searchCourse(searchForm)">
                         <div class="input-group">
-                          <input type="text" ngModel #email="ngModel" type="search" name="search" class="form-control" placeholder="Search">
+                          <input type="text" ngModel #search="ngModel" type="search" name="search" class="form-control" placeholder="Search">
                           <div class="input-group-append">
                             <button class="btn btn-light" type="submit"><i class="fa fa-search"></i></button>
                           </div>
                         </div>
-                        </form>
-
-                        <ul class="list-menu">
-                          <li><a href="#">T-shirt  </a></li>
-                          <li><a href="#">Trousers </a></li>
-                        </ul>
-
+                      </form>
                     </div> <!-- card-body.// -->
                 </div>
             </article> <!-- filter-group  .// -->
@@ -46,26 +40,23 @@
                 <header class="card-header">
                     <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true" class="">
                         <i class="icon-control fa fa-chevron-down"></i>
-                        <h6 class="title">Marca </h6>
+                        <h6 class="title"> Category </h6>
                     </a>
                 </header>
                 <div class="filter-content collapse show" id="collapse_2">
-                    <div class="card-body">
-                        <label class="custom-control custom-checkbox">
-                          <input type="checkbox" checked="" class="custom-control-input">
-                          <div class="custom-control-label">Terranova
-                              <b class="badge badge-pill badge-light float-right">120</b>  </div>
-                        </label>
-                        <label class="custom-control custom-checkbox">
-                          <input type="checkbox" checked="" class="custom-control-input">
-                          <div class="custom-control-label">Adidas
-                              <b class="badge badge-pill badge-light float-right">15</b>  </div>
-                        </label>
-                        <label class="custom-control custom-checkbox">
-                          <input type="checkbox" checked="" class="custom-control-input">
-                          <div class="custom-control-label">Nike
-                              <b class="badge badge-pill badge-light float-right">35</b> </div>
-                        </label>
+                    <div class="card-body" *ngIf="coursesCategoryRest && coursesCategoryServerless">
+                        <form >
+                          <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <div class="custom-control-label" (click)="setCategory('rest')"> Rest-Angular
+                                <b class="badge badge-pill badge-light float-right"> {{coursesCategoryRest.length}} </b>  </div>
+                          </label>
+                          <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <div class="custom-control-label" (click)="setCategory('serverless')"> Serverless-Angular
+                                <b class="badge badge-pill badge-light float-right"> {{coursesCategoryServerless.length}} </b>  </div>
+                          </label>
+                        </form>
             </div> <!-- card-body.// -->
                 </div>
             </article> <!-- filter-group .// -->
@@ -78,18 +69,20 @@
                 </header>
                 <div class="filter-content collapse show" id="collapse_3">
                     <div class="card-body">
-                        <input type="range" class="custom-range" min="0" max="100" name="">
+                      <form #priceForm="ngForm" (ngSubmit)="setPrice(priceForm)">
+                        <!-- <input type="range" class="custom-range" min="0" max="1000" name=""> -->
                         <div class="form-row">
                         <div class="form-group col-md-6">
                           <label>Min</label>
-                          <input class="form-control" placeholder="$0" type="number">
+                          <input ngModel #min="ngModel" name="min" class="form-control" value="{{minimo}}" placeholder="$ 0" type="number">
                         </div>
                         <div class="form-group text-right col-md-6">
                           <label>Max</label>
-                          <input class="form-control" placeholder="$1,0000" type="number">
+                          <input ngModel #max="ngModel" name="max" class="form-control" value="{{massimo}}" placeholder="$ 1000" type="number">
                         </div>
                         </div> <!-- form-row.// -->
-                        <button class="btn btn-block btn-primary">Apply</button>
+                        <button class="btn btn-block btn-primary" type="submit"> Apply </button>
+                      </form>
                     </div><!-- card-body.// -->
                 </div>
             </article> <!-- filter-group .// -->
@@ -97,31 +90,28 @@
                 <header class="card-header">
                     <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
                         <i class="icon-control fa fa-chevron-down"></i>
-                        <h6 class="title">Sizes </h6>
+                        <h6 class="title"> Difficult </h6>
                     </a>
                 </header>
-                <div class="filter-content collapse show" id="collapse_4">
-                    <div class="card-body">
-                      <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> XS </span>
-                      </label>
+                <div class="filter-content collapse show" id="collapse_3">
+                    <form #difficultForm="ngForm" (ngSubmit)="setDifficult(difficultForm)">
+                      <div class="card-body">
+                        <label class="checkbox-btn">
+                          <input ngModel #beginner="ngModel" name="beginner" type="checkbox">
+                          <span class="btn btn-primary btn-light mr-5"> Beginner  </span>
+                        </label>
 
-                      <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> SM </span>
-                      </label>
+                        <label class="checkbox-btn">
+                          <input ngModel #intermediate="ngModel" name="intermediate" type="checkbox">
+                          <span class="btn btn-primary btn-light mr-5"> Intermediate </span>
+                        </label>
 
-                      <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> LG </span>
-                      </label>
-
-                      <label class="checkbox-btn">
-                        <input type="checkbox">
-                        <span class="btn btn-light"> XXL </span>
-                      </label>
-                </div><!-- card-body.// -->
+                        <label class="checkbox-btn">
+                          <input ngModel #advanced="ngModel" name="advanced" type="checkbox">
+                          <span class="btn btn-primary btn-light mr-5"> Advanced </span>
+                        </label>
+                      </div>
+                    </form>
                 </div>
             </article> <!-- filter-group .// -->
         </div> <!-- card.// -->
@@ -138,28 +128,30 @@
 
         <div class="row">
             <ng-container *ngFor="let item of courses" >
-              <div class="col-md-4">
-                <figure class="card card-product-grid">
-                    <div class="img-wrap">
-                        <!-- <span class="badge badge-danger"> NEW </span> -->
-                        <img src="{{item.imageUrl}}">
-                        <a class="btn-overlay" routerLink="/detail/{{item.url}}"><i class="fa fa-search-plus"></i> Vai al dettaglio</a>
-                        <!-- <a class="btn-overlay" [routerLink]="['/detail', item.url]"><i class="fa fa-search-plus"></i> Vai al dettaglio</a> -->
+              <ng-container *ngIf="item.price>minimo && item.price<massimo">
+                <div class="col-md-4">
+                  <figure class="card card-product-grid">
+                      <div class="img-wrap">
+                          <!-- <span class="badge badge-danger"> NEW </span> -->
+                          <img src="{{item.imageUrl}}">
+                          <a class="btn-overlay" routerLink="/detail/{{item.url}}"><i class="fa fa-search-plus"></i> Vai al dettaglio</a>
+                          <!-- <a class="btn-overlay" [routerLink]="['/detail', item.url]"><i class="fa fa-search-plus"></i> Vai al dettaglio</a> -->
 
-                    </div> <!-- img-wrap.// -->
-                    <figcaption class="info-wrap">
-                        <div class="fix-height">
-                            <a class="title">{{item.titles.description}}</a>
-                            <div class="price-wrap mt-2">
-                                <span class="price">{{item.price| currency:'EUR'}}</span>
-                                <!--<del class="price-old">$1980</del> --><!--SCONTO-->
-                            </div> <!-- price-wrap.// -->
-                        </div>
-                        <!-- DEFINIRE SE SALVARE CARRELLO CON UID O CON URL. ID SICURAMENTE UNICO, URL NO -->
-                        <a class="btn btn-block btn-primary text-light" (click)="addToCart(item.url)">Add to cart </a>
-                    </figcaption>
-                </figure>
-              </div>
+                      </div> <!-- img-wrap.// -->
+                      <figcaption class="info-wrap">
+                          <div class="fix-height">
+                              <a class="title">{{item.titles.description}}</a>
+                              <div class="price-wrap mt-2">
+                                  <span class="price">{{item.price| currency:'USD'}}</span>
+                                  <!--<del class="price-old">$1980</del> --><!--SCONTO-->
+                              </div> <!-- price-wrap.// -->
+                          </div>
+                          <!-- DEFINIRE SE SALVARE CARRELLO CON UID O CON URL. ID SICURAMENTE UNICO, URL NO -->
+                          <a class="btn btn-block btn-primary text-light" (click)="addToCart(item.url)">Add to cart </a>
+                      </figcaption>
+                  </figure>
+                </div>
+              </ng-container>
             </ng-container>
         </div> <!-- row end.// -->
 
