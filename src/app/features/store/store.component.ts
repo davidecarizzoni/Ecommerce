@@ -28,7 +28,9 @@ export class StoreComponent implements OnInit {
   massimo: number = 1000;
   minimo: number = 0;
 
-
+  beginner: any = false;
+  intermediate: any = false;
+  advanced: any = false;
 
   //COUNT: da implementare
 
@@ -78,12 +80,17 @@ export class StoreComponent implements OnInit {
     console.log(form.value.search);
   }
 
-  setDifficult(form:any){
-    console.log(form.value.beginner + " "+form.value.intemediate)
+  setDifficult(dif:string){
+    if(dif == 'beginner')      this.beginner = !this.beginner;
+    if(dif == 'intermediate')  this.intermediate = !this.intermediate;
+    if(dif == 'advanced')      this.advanced = !this.advanced;
+
+    if(this.beginner && !this.intermediate && !this.advanced) this.coursesService.getCoursesByDifficult('BEGINNER').subscribe(courses => this.courses = courses)
+    else if(!this.beginner && this.intermediate && !this.advanced) this.coursesService.getCoursesByDifficult('INTERMEDIATE').subscribe(courses => this.courses = courses)
+    else if(!this.beginner && !this.intermediate && this.advanced) this.coursesService.getCoursesByDifficult('ADVANCED').subscribe(courses => this.courses = courses)
+    else this.coursesService.getAllCourses().subscribe(courses => this.courses = courses)
   }
 
 }
-function filteredCourses(filteredCourses: any) {
-  throw new Error('Function not implemented.');
-}
+
 

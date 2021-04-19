@@ -47,6 +47,14 @@ export class CourseService {
           first());
   }
 
+  getCoursesByDifficult(difficult: string):  Observable<Course[]> {
+    return this.db.collection('courses/', ref => ref.where('difficult', 'array-contains', difficult))
+      .snapshotChanges()
+      .pipe(
+        map(snaps => convertSnaps<Course>(snaps)),
+          first());
+  }
+
   searchCourses(search:string):  Observable<Course[]> {
     return this.db.collection('courses/', ref => ref.where('titles.description', "array-contains", search))
       .snapshotChanges()

@@ -94,21 +94,21 @@
                     </a>
                 </header>
                 <div class="filter-content collapse show" id="collapse_3">
-                    <form #difficultForm="ngForm" (ngSubmit)="setDifficult(difficultForm)">
+                    <form >
                       <div class="card-body">
                         <label class="checkbox-btn">
-                          <input ngModel #beginner="ngModel" name="beginner" type="checkbox">
-                          <span class="btn btn-primary btn-light mr-5"> Beginner  </span>
+                          <input type="checkbox" >
+                          <span class="btn btn-primary btn-light mr-5" (click)="setDifficult('beginner')"> Beginner  </span>
                         </label>
 
                         <label class="checkbox-btn">
-                          <input ngModel #intermediate="ngModel" name="intermediate" type="checkbox">
-                          <span class="btn btn-primary btn-light mr-5"> Intermediate </span>
+                          <input type="checkbox" >
+                          <span class="btn btn-primary btn-light mr-5" (click)="setDifficult('intermediate')"> Intermediate </span>
                         </label>
 
                         <label class="checkbox-btn">
-                          <input ngModel #advanced="ngModel" name="advanced" type="checkbox">
-                          <span class="btn btn-primary btn-light mr-5"> Advanced </span>
+                          <input type="checkbox" >
+                          <span class="btn btn-primary btn-light mr-5" (click)="setDifficult('advanced')"> Advanced </span>
                         </label>
                       </div>
                     </form>
