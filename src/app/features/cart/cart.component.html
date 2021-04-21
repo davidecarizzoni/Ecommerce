@@ -1,5 +1,5 @@
 <!-- MENU -->
-<app-menu *ngIf="cart && courses" [version]=1></app-menu>
+<app-menu [version]=1></app-menu>
 
     <!-- ========================= SECTION PAGETOP ========================= -->
     <section *ngIf="cart && courses"  class="section-pagetop bg">
@@ -36,7 +36,7 @@
                     <figure class="itemside">
                         <div class="aside"><img src="{{course.imageUrl}}" class="img-md"></div>
                         <figcaption class="info">
-                            <a class="title text-dark"> {{course.titles.description}}</a>
+                            <a class="title text-dark"> {{course.description}}</a>
                             <p class="text-muted small"> {{course.categories}}</p>
                         </figcaption>
                     </figure>
@@ -44,7 +44,7 @@
 
                   <td>
                     <div class="price-wrap">
-                        <var class="price">{{course.price | currency:'EUR'}} </var>
+                        <var class="price">{{course.price | currency:'USD'}} </var>
                     </div>
                   </td>
                   <td class="text-right">
@@ -62,7 +62,7 @@
       </table>
 
       <div class="card-body border-top">
-          <a routerLink="/checkout" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
+          <a *ngIf="cart && cart.productList.length>0" class="btn btn-primary float-md-right text-light" (click)="pay(totCost)"> Buy now <i class="fa fa-chevron-right"></i> </a>
           <a routerLink="/store" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
       </div>
       </div> <!-- card.// -->

@@ -56,7 +56,7 @@ export class CourseService {
   }
 
   searchCourses(search:string):  Observable<Course[]> {
-    return this.db.collection('courses/', ref => ref.where('titles.description', "array-contains", search))
+    return this.db.collection('courses/', ref => ref.where('description', "==", search))
       .snapshotChanges()
       .pipe(
         map(snaps => convertSnaps<Course>(snaps)),

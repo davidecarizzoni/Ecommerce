@@ -1,10 +1,8 @@
 
 export interface Course {
   id?: string;
-  titles: {
-    description:string;
-    longDescription: string;
-  };
+  description:string;
+  longDescription: string;
 
   spec1: String;
   spec2: String;

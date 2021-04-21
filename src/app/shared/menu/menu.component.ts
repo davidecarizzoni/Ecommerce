@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { CartService } from 'src/app/core/services/cart/cart.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,15 +13,19 @@ export class MenuComponent implements OnInit {
   @Input()
   version:any;
 
+  @Input()
+  cartLength:any;
+
+  userUid:any;
   user:any;
   isLog:boolean = false;
 
-  constructor( private authService: AuthService, private router:Router){}
+  constructor( private authService: AuthService, private router:Router, private cartService: CartService){}
 
   ngOnInit() {
-   this.authService.getUserState().subscribe((user:any) => {
-      this.user = user;
-    })
+   this.userUid = localStorage.getItem("userUid");
+   this.authService.getUserState().subscribe((user:any) => this.user = user)
+   this.cartService.findCartByUserUid(this.userUid).subscribe(cart => this.cartLength = cart.productList.length)
   }
 
   async isLogged(){

@@ -20,8 +20,10 @@ export class StoreComponent implements OnInit {
   coursesFiltered!: Course[];
   coursesCategoryRest!: Course[];
   coursesCategoryServerless!: Course[];
+  cartLength:any;
 
   user: any;
+  userUid: any;
   serverLess: boolean = false;
   restAngular: boolean = false;
 
@@ -37,7 +39,9 @@ export class StoreComponent implements OnInit {
   constructor(private coursesService: CourseService, private auth: AuthService, private cartService:CartService) {}
 
   ngOnInit(): void {
+    this.userUid = localStorage.getItem("userUid");
     this.auth.getUserState().subscribe(user => this.user = user)
+    this.cartService.findCartByUserUid(this.userUid).subscribe(cart => this.cartLength = cart.productList.length)
     this.coursesService.getAllCourses().subscribe(courses => this.courses = courses)
     this.coursesService.getCoursesByCategory('rest-angular').subscribe(courses => this.coursesCategoryRest = courses)
     this.coursesService.getCoursesByCategory('serverless-angular').subscribe(courses => this.coursesCategoryServerless = courses)
@@ -77,7 +81,10 @@ export class StoreComponent implements OnInit {
   }
 
   searchCourse(form:any){
-    console.log(form.value.search);
+    if(form.value.search=="" || form.value.search==null)
+      this.coursesService.getAllCourses().subscribe(courses => this.courses = courses);
+    else
+      this.coursesService.searchCourses(form.value.search).subscribe(courses => this.courses = courses)
   }
 
   setDifficult(dif:string){

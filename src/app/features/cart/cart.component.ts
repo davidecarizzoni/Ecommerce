@@ -49,14 +49,15 @@ export class CartComponent implements OnInit {
     this.cartService.remove(this.userUid, courseUrl).then(()=>this.getCart())
   }
 
-  pay(amount: any) {
+  async pay(amount: any) {
 
-    var handler = (<any>window).StripeCheckout.configure({
+     var handler = await (<any>window).StripeCheckout.configure({
       key: 'pk_test_51Ig9tZC3y5CwMUxMXDQbwOIAS3Wf9Q6qbra2jgZ2OV0mOfQaccsuaRdmevYVlZJLrny7U7d4en31mroc1PP3F5ij00oXfLqsuo',
       locale: 'auto',
-      token: function (token: any) {
+      token: (token: any) =>{
         console.log(token)
-        alert('Thanks for your purchases');
+        this.removeCart();
+        this.router.navigateByUrl('store');
       }
     });
 
@@ -66,6 +67,11 @@ export class CartComponent implements OnInit {
       amount: amount * 100
     });
   }
+
+  removeCart(){
+    this.cartService.removeCart(this.userUid)
+  }
+
 
   loadStripe() {
 
@@ -79,16 +85,19 @@ export class CartComponent implements OnInit {
           key: 'pk_test_51HxRkiCumzEESdU2Z1FzfCVAJyiVHyHifo0GeCMAyzHPFme6v6ahYeYbQPpD9BvXbAacO2yFQ8ETlKjo4pkHSHSh00qKzqUVK9',
           locale: 'auto',
           token: function (token: any) {
-            console.log(token)
-            alert('Payment Success!!');
-          }
+            console.log(token);          }
         });
+
       }
-       window.document.body.appendChild(s);
+      window.document.body.appendChild(s);
     }
+
+
   }
 
-
+  prova(){
+    console.log("prova")
+  }
 
   title = 'Epay';
 

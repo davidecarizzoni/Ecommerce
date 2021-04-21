@@ -5,6 +5,7 @@ import { firestore } from 'firebase';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { convertSnaps } from '../db-utils';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class CartService {
 
   cartRef!: AngularFirestoreCollection<Cart>;
 
-  constructor(private db: AngularFirestore){
+  constructor(private db: AngularFirestore, private router: Router){
     this.cartRef = this.db.collection('/carts');
   }
 
@@ -60,6 +61,15 @@ export class CartService {
         )
   }
 
+  removeCart(uid: string) {
+    this.cartRef.doc(uid).delete().then(() => {
+      console.log("Document succesfully deleted");
+      this.router.navigateByUrl('store')
+    }).catch((error:any) => {
+      console.log(error)
+    })
+  }
+
   findCartByUserUid(userUid: string): Observable<Cart> {
     return this.db.collection('carts', ref=> ref.where("userUid", "==", userUid))
       .snapshotChanges()
@@ -71,6 +81,10 @@ export class CartService {
           first()
         )
   }
+
+
+
+
 
 
 

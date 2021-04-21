@@ -15,10 +15,14 @@
         <div class="col-lg-6 col-sm-12"></div> <!-- col.// -->
         <div class="col-lg-4 col-sm-6 col-12">
             <div class="widgets-wrap float-md-right" >
-                <div class="widget-header  mr-3" >
+                <div *ngIf="user" class="widget-header  mr-3" >
                     <a class="icon icon-sm rounded-circle border" (click)="goToCart()"><i class="fa fa-shopping-cart"  ></i></a>
-                    <span class="badge badge-pill badge-danger notify">0</span> <!--contare il numero di prodotti del carrello-->
+                    <span *ngIf="cartLength" class="badge badge-pill badge-danger notify">{{cartLength}}</span> <!--contare il numero di prodotti del carrello-->
                 </div>
+                <div *ngIf="!user" class="widget-header  mr-3" >
+                  <a class="icon icon-sm rounded-circle border" (click)="goToCart()"><i class="fa fa-shopping-cart"  ></i></a>
+                  <span *ngIf="cartLength" class="badge badge-pill badge-danger notify"></span> <!--contare il numero di prodotti del carrello-->
+              </div>
                 <div class="widget-header icontext">
                     <a class="icon icon-sm rounded-circle border"><i class="fa fa-user"></i></a>
                     <div class="text">
